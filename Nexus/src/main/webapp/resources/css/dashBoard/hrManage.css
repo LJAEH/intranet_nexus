@@ -1,0 +1,280 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* 프로그레스 바 div */
+.bar-info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* 프로그레스바 스타일 */
+#progressBar {
+    width: 100%;
+    appearance: none;
+}
+
+#progressBar::-webkit-progress-bar {
+    height: 20px;
+    background: #f0f0f0;
+    border-radius: 20px;
+    /* box-shadow: inset 3px 3px 10px #ccc; */
+}
+
+#progressBar::-webkit-progress-value {
+    border-radius: 20px;
+    background: #04A2E4;
+}
+
+.underBlue::-webkit-progress-value {
+    border-radius: 20px;
+    background: #04A2E4 !important;
+}
+
+.overOrange::-webkit-progress-value {
+    border-radius: 20px;
+    background: rgb(255, 180, 126) !important;
+
+}
+
+.progressTemp {
+    display: flex;
+    justify-content: space-between;
+}
+
+.progressTemp span {
+    color: var(--gray500);
+    margin-top: 4px;
+    font-size: 12px;
+}
+
+/* 워크타임 */
+.work-time-box {
+    display: flex;
+    flex-direction: column;
+    width: 110px;
+}
+
+.extend {
+    color: var(--primary300);
+    font-size: 14px;
+}
+
+section {
+    display: flex;
+
+}
+
+
+
+.container {
+    margin: auto;
+    width: 70%;
+}
+
+.hr-header {
+    margin: 30px 0;
+}
+
+.btn-div {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0 5px
+}
+
+.monthBtn {
+    display: flex;
+}
+
+.excel-div {
+    border: 1px solid var(--primary500);
+    border-radius: 5px;
+}
+
+.excelBtn {
+    background-color: transparent;
+    border-style: none;
+    padding: 10px 15px 7px 15px;
+    color: var(--primary500);
+    cursor: pointer;
+}
+
+.excelBtn:hover {
+    background-color: var(--primary500);
+    color: white;
+    transition: all 0.5s;
+}
+
+.dept-info-span {
+    color: var(--primary600);
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.dept-size-span {
+    color: var(--gray400);
+    font-size: 24px;
+    margin-left: 5px;
+    margin-bottom: 20px;
+}
+
+#attnDate {
+    font-size: 20px;
+}
+
+.monthBtn {
+    background-color: transparent;
+    border-style: none;
+
+}
+
+.monthBtn>i {
+    width: 20px;
+    cursor: pointer;
+}
+
+.monthBtn>i:hover {
+    color: var(--primary400);
+}
+
+.fa-lg {
+    line-height: 1.05em !important;
+}
+
+#decreaseBtn {
+    margin-right: 20px;
+}
+
+#increaseBtn {
+    margin-left: 20px;
+}
+
+/* 테이블 스타일 */
+table {
+    width: 100%;
+    margin-bottom: 50px;
+    border-collapse: collapse;
+}
+
+th {
+    min-width: 100px;
+    padding: 10px 0;
+    text-align: left;
+    border-bottom: 1px solid var(--gray500);
+
+}
+
+td {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--gray100);
+
+}
+
+td:nth-child(1),
+th:nth-child(1) {
+    width: 8%;
+}
+
+td:nth-child(2),
+th:nth-child(2) {
+    width: 8%;
+}
+
+td:nth-child(3),
+th:nth-child(3) {
+    width: 6%;
+}
+
+td:nth-child(4),
+th:nth-child(4) {
+    width: 8%;
+}
+
+td:nth-child(5),
+th:nth-child(5) {
+    width: 66%;
+}
+
+td:nth-child(6),
+th:nth-child(6) {
+    width: 14%;
+    padding-left: 10px;
+}
+
+.work-time-info {
+    display: flex;
+    width: 100%;
+}
+
+.progress-box {
+    width: 100%;
+    padding-right: 10px;
+}
+
+.bar-box {
+    width: 100%;
+}
+
+th {
+    color: var(--gray600);
+}
+
+/* 폰트 */
+.hr-name {
+    font-size: 18px;
+}
+
+.hr-team-job {
+    display: flex;
+    gap: 8px;
+}
+
+.hr-teamName {
+    font-size: 14px;
+    color: var(--gray400);
+}
+
+.hr-jobDanger {
+    font-size: 14px;
+    color: #e85347;
+}
+
+.hr-jobWaning {
+    font-size: 14px;
+    color: #f4bd0e;
+}
+
+.hr-jobPurple {
+    font-size: 14px;
+    color: #798bff;
+}
+
+.hr-jobInfo {
+    font-size: 14px;
+    color: #09c2de;
+}
+
+.hr-deptName {
+    font-size: 14px;
+    color: var(--gray400);
+}
+
+
+.hr-overTime {
+    font-size: 14px;
+    color: #e85347;
+}
+
+.hr-normalTime {
+    font-size: 14px;
+    color: #1ee0ac;
+}

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="workMapper">
+
+	<resultMap type="workGeneral" id="workGeneral_rm">
+		<id property="workNo" column="WORK_NO" />
+		<result property="memNo" column="MEM_NO"/>
+		<result property="typeNo" column="TYPE_NO"/>
+		<result property="title" column="TITLE"/>
+		<result property="sendDate" column="SEND_DATE"/>
+		<result property="approvalDate" column="APPROVAL_DATE"/>
+		<result property="content" column="CONTENT"/>
+		<result property="start" column="START"/>
+		<result property="end" column="END"/>
+		<result property="next" column="NEXT"/>
+		<result property="approvalList" column="APPROVAL_LIST"/>
+		<result property="tempSave" column="TEMP_SAVE"/>
+		<result property="finFlag" column="FIN_FLAG"/>
+		<result property="workState" column="WORK_STATE"/>
+		<result property="opinion" column="OPINION"/>
+		<result property="typeName" column="TYPE_NAME"/>
+		<result property="memName" column="MEM_NAME"/>
+		<result property="fileRename" column="FILE_RENAME"/>
+		<result property="fileOrigin" column="FILE_ORIGIN"/>
+	</resultMap>
+
+	<resultMap type="workGeneralList" id="workGeneralList_rm">
+		<id property="workNo" column="WORK_NO" />
+		<result property="typeNo" column="TYPE_NO"/>
+		<result property="title" column="TITLE"/>
+		<result property="sendDate" column="SEND_DATE"/>
+		<result property="workState" column="WORK_STATE"/>
+		<result property="opinion" column="OPINION"/>
+		<result property="typeName" column="TYPE_NAME"/>
+		<result property="fileRename" column="FILE_RENAME"/>
+		<result property="memName" column="MEMBER_NAME"/>
+	</resultMap>
+	
+	<resultMap type="workDetail" id="workDetail_rm">
+		<id property="workNo" column="WORK_NO" />
+		<result property="typeNo" column="TYPE_NO"/>
+		<result property="memNo" column="MEM_NO"/>
+		<result property="title" column="TITLE"/>
+		<result property="sendDate" column="SEND_DATE"/>
+		<result property="content" column="CONTENT"/>
+		<result property="start" column="START"/>
+		<result property="end" column="END"/>
+		<result property="next" column="NEXT"/>
+		<result property="approvalList" column="APPROVAL_LIST"/>
+		<result property="opinion" column="OPINION"/>
+		<result property="fileRename" column="FILE_RENAME"/>
+		<result property="fileOrigin" column="FILE_ORIGIN"/>
+		<result property="memName" column="MEM_NAME"/>
+		<result property="email" column="EMAIL"/>
+		<result property="nextMemName" column="NEXT_MEM_NAME"/>
+		<result property="nextMemEmail" column="NEXT_MEM_EMAIL"/>
+	</resultMap>
+	
+	<resultMap type="approvalMember" id="approvalMember_rm">
+		<id property="memNo" column="MEM_NO" />
+		<result property="jobNo" column="JOB_NO"/>
+		<result property="teamNo" column="TEAM_NO"/>
+		<result property="deptNo" column="DEPT_NO"/>
+		<result property="memName" column="MEM_NAME"/>
+	</resultMap>
+	
+	<!-- 상신함 리스트 -->
+	<select id="workSendList" resultMap="workGeneralList_rm">
+		SELECT WORK_NO, TYPE_NO, TITLE , SEND_DATE ,WORK_STATE , OPINION , TYPE_NAME, FILE_RENAME 
+		FROM "WORK"
+		LEFT JOIN WORK_TYPE USING(TYPE_NO)
+		LEFT JOIN UPLOAD_FILE USING(WORK_NO)
+		WHERE MEM_NO = #{memNo}
+		AND TO_CHAR(SEND_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+		AND TEMP_SAVE IS NULL
+		ORDER BY SEND_DATE DESC
+	</select>
+	
+	<!-- 날짜 범위 상신함 리스트 -->
+	<select id="workSendSelectDate" resultMap="workGeneralList_rm">
+		SELECT WORK_NO, TYPE_NO, TITLE , SEND_DATE ,WORK_STATE , OPINION , TYPE_NAME, FILE_RENAME 
+		FROM "WORK"
+		LEFT JOIN WORK_TYPE USING(TYPE_NO)
+		LEFT JOIN UPLOAD_FILE USING(WORK_NO)
+		WHERE MEM_NO = #{memNo}
+		AND TO_CHAR(SEND_DATE, 'YYYY-MM-DD') BETWEEN #{startDate} AND #{endDate}
+		ORDER BY SEND_DATE DESC
+	</select>
+	
+	<!-- 결재 디테일 조회 -->
+	<select id="detailSelect" parameterType="_int" resultMap="workDetail_rm">
+		SELECT WORK_NO, TYPE_NO, MEM_NO, TITLE, SEND_DATE, CONTENT, "START", "END", "NEXT", APPROVAL_LIST, OPINION, FILE_RENAME, FILE_ORIGIN, MEM_NAME, EMAIL, 
+		(SELECT MEM_NAME FROM "MEMBER" m WHERE MEM_NO = w."NEXT") AS NEXT_MEM_NAME, (SELECT EMAIL FROM "MEMBER" m WHERE MEM_NO = w."NEXT") AS NEXT_MEM_EMAIL
+		FROM "WORK" w
+		LEFT JOIN UPLOAD_FILE USING(WORK_NO)
+		LEFT JOIN MEMBER USING(MEM_NO)
+		WHERE WORK_NO = #{workNo}
+	</select>
+	
+	<!-- 결재취소 -->
+	<delete id="workCancle" parameterType="_int">
+		DELETE FROM "WORK" WHERE WORK_NO = #{workNo}
+	</delete>
+
+	<!-- 결재 입력하기 -->
+	<insert id="workWrite" useGeneratedKeys="true"> 
+		<selectKey keyProperty="workNo" resultType="_int" order="BEFORE">
+				SELECT SEQ_WORK_NO.NEXTVAL FROM DUAL
+		</selectKey>
+		
+		<if test="typeNo == 1">
+			INSERT INTO WORK(WORK_NO, MEM_NO, TYPE_NO, TITLE, SEND_DATE, CONTENT, NEXT, APPROVAL_LIST, WORK_STATE)
+			VALUES (#{workNo}, #{memNo}, #{typeNo}, #{title}, DEFAULT, #{content}, #{next}, #{approvalList}, DEFAULT)
+		</if>
+		
+		<if test="typeNo == 2">
+			INSERT INTO WORK(WORK_NO, MEM_NO, TYPE_NO, TITLE, SEND_DATE, "START", "END", NEXT, APPROVAL_LIST, WORK_STATE)
+			VALUES (#{workNo}, #{memNo}, #{typeNo}, '연차 결재', DEFAULT, TO_DATE(#{start}, 'YYYY-MM-DD'), TO_DATE(#{end}, 'YYYY-MM-DD'), #{next}, #{approvalList}, DEFAULT)
+		</if>
+	
+		<if test="typeNo == 3">
+			INSERT INTO WORK(WORK_NO, MEM_NO, TYPE_NO, TITLE, SEND_DATE, CONTENT, "START", "END", NEXT, APPROVAL_LIST, WORK_STATE)
+			VALUES (#{workNo}, #{memNo}, #{typeNo}, '출장 결재', DEFAULT, #{content}, TO_DATE(#{start}, 'YYYY-MM-DD'), TO_DATE(#{end}, 'YYYY-MM-DD'), #{next}, #{approvalList}, DEFAULT)
+		</if>
+	</insert>
+	
+	<!-- 임시저장 -->
+	<update id="tempSave">
+		UPDATE WORK SET TEMP_SAVE = 'Y' WHERE WORK_NO = #{workNo}
+	</update>
+	
+	<!-- 결재 파일 입력하기 -->
+	<insert id="insertWorkFile" parameterType="file" useGeneratedKeys="true">
+		<selectKey keyProperty="fileNo" resultType="_int" order="BEFORE">
+			SELECT SEQ_FILE_NO.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO UPLOAD_FILE(WORK_NO, FILE_RENAME, FILE_ORIGIN, FILE_NO) 
+		VALUES(#{workNo}, #{fileReName}, #{fileOrigin}, #{fileNo})
+	</insert>
+	
+	<!-- 결재자 리스트 -->
+	<select id="approvalMember" resultMap="approvalMember_rm">
+		SELECT MEM_NO , JOB_NO , TEAM_NO , DEPT_NO , MEM_NAME 
+		FROM "MEMBER" 
+		WHERE SECESSION = 'N'
+		ORDER BY JOB_NO ASC, MEM_NAME ASC
+	</select>
+	
+	<!-- 수신함 -->
+	<select id="workInbox" resultMap="workGeneralList_rm">
+		SELECT WORK_NO, TYPE_NO, TITLE , SEND_DATE ,WORK_STATE , OPINION , TYPE_NAME, FILE_RENAME, (SELECT MEM_NAME FROM "MEMBER" m WHERE M.MEM_NO = W.MEM_NO) AS "MEMBER_NAME"
+		FROM "WORK" w
+		LEFT JOIN WORK_TYPE USING(TYPE_NO)
+		LEFT JOIN UPLOAD_FILE USING(WORK_NO)
+		WHERE NEXT = #{memNo}
+		AND WORK_STATE = '진행중'
+		AND TEMP_SAVE IS NULL
+		ORDER BY SEND_DATE DESC
+	</select>
+	
+	<!-- 결재자 정보 -->
+	<select id="nextMember" parameterType="_int" resultType="Map">
+		SELECT MEM_NAME , DEPT_NAME, JOB_NAME
+		FROM "MEMBER"
+		LEFT JOIN DEPARTMENT USING (DEPT_NO)
+		LEFT JOIN JOB USING (JOB_NO)
+		WHERE MEM_NO = #{next}
+	</select>
+	
+	<!-- 반려 승인 -->
+	<update id="clickApproval">
+		<if test="btnName == 'reject'">
+			UPDATE "WORK"
+			<set>
+				APPROVAL_DATE = SYSDATE,
+				WORK_STATE = '반려',
+				APPROVAL_LIST = #{approvalList},
+				<if test="opinion != null">OPINION = #{opinion}</if>
+			</set>
+			WHERE WORK_NO = #{workNo}
+		</if>
+		<if test="btnName == 'approve'">
+			UPDATE "WORK"
+			<set>
+				APPROVAL_DATE = SYSDATE,
+				<if test = "next == ''">
+					WORK_STATE = '승인',				
+				</if>
+				<if test = "next != ''">
+					NEXT = #{next},
+				</if>
+				APPROVAL_LIST = #{approvalList}			
+			</set>
+			WHERE WORK_NO = #{workNo}
+		</if>
+	</update>
+	
+	
+	<!-- 임시저장 리스트 불러오기 -->
+	<select id="workTemp" resultMap="workGeneralList_rm">
+		SELECT WORK_NO , TYPE_NO , TITLE , SEND_DATE , TYPE_NAME
+		FROM "WORK"
+		LEFT JOIN WORK_TYPE USING (TYPE_NO)
+		WHERE MEM_NO = #{memNo}
+		AND TEMP_SAVE = 'Y'
+		ORDER BY SEND_DATE DESC
+	</select>
+	
+	<!-- 결재 임시저장 제출 완료 후 임시저장 지우기 -->
+	<delete id="tempDelete" parameterType="_int">
+		DELETE FROM "WORK" WHERE WORK_NO = ${workNo}
+	</delete>
+	
+	
+</mapper>
+
+
+

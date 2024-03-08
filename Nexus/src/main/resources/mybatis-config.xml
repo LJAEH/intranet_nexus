@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+
+	<typeAliases>
+		<!-- 공통 -->
+		<typeAlias type="com.ln.intranet.common.model.vo.UploadFile" alias="file"/>
+		<typeAlias type="com.ln.intranet.member.model.vo.Member" alias="member"/>
+		<!-- 공지/부서 -->
+		<typeAlias type="com.ln.intranet.dept.model.vo.Board" alias="board"/>
+		<typeAlias type="com.ln.intranet.dept.model.vo.BoardDetail" alias="detail"/>
+		<typeAlias type="com.ln.intranet.notice.model.vo.Notice" alias="notice"/>
+		<typeAlias type="com.ln.intranet.notice.model.vo.NoticeDetail" alias="noticeDetail"/>
+		<!-- 설문 -->
+		<typeAlias type="com.ln.intranet.survey.model.vo.Survey" alias="survey"/>
+		<typeAlias type="com.ln.intranet.survey.model.vo.SurveyResult" alias="surveyResult"/>
+		<typeAlias type="com.ln.intranet.survey.model.vo.SurveyPreview" alias="surveyPreview"/>
+		<!-- 채팅 -->
+		<typeAlias type="com.ln.intranet.chat.model.vo.ChatRoom" alias="chatRoom"/>
+		<typeAlias type="com.ln.intranet.chat.model.vo.ChatRoomJoin" alias="chatRoomJoin"/>
+		<typeAlias type="com.ln.intranet.chat.model.vo.Message" alias="message"/>	
+		<!-- 결재 -->
+		<typeAlias type="com.ln.intranet.work.model.vo.WorkGeneral" alias="workGeneral"/>
+		<typeAlias type="com.ln.intranet.work.model.vo.WorkDetail" alias="workDetail"/>
+		<typeAlias type="com.ln.intranet.work.model.vo.WorkGeneralList" alias="workGeneralList"/>
+		<typeAlias type="com.ln.intranet.work.model.vo.ApprovalMember" alias="approvalMember"/>
+		<!-- 결재-프로젝트 -->
+		<typeAlias type="com.ln.intranet.work.model.vo.Project" alias="project"/>
+		<typeAlias type="com.ln.intranet.work.model.vo.ProjectTask" alias="projectTask"/>
+		<typeAlias type="com.ln.intranet.work.model.vo.ProjectList" alias="projectList"/>		
+		<typeAlias type="com.ln.intranet.work.model.vo.ProjectTaskList" alias="projectTaskList"/>	
+		<typeAlias type="com.ln.intranet.work.model.vo.ProjectDetail" alias="projectDetail"/>	
+		<!-- 근태 -->
+		<typeAlias type="com.ln.intranet.attendance.model.vo.Attendance" alias="attendance"/>
+		<!-- 회의실 -->
+		<typeAlias type="com.ln.intranet.meeting.model.vo.MeetingRoom" alias="meetingRoom"/>
+		<!-- 대시보드 -->		
+		<typeAlias type="com.ln.intranet.dashBoard.model.vo.AttnDoughnut" alias="attnDoughnut"/>
+		<typeAlias type="com.ln.intranet.dashBoard.model.vo.HumanResourceManage" alias="hrManage"/>
+		<typeAlias type="com.ln.intranet.dashBoard.model.vo.DeptTeam" alias="deptTeam"/>		
+		<typeAlias type="com.ln.intranet.dashBoard.model.vo.ProjectPolar" alias="projectPolar"/>		
+		<typeAlias type="com.ln.intranet.dashBoard.model.vo.ProjectTotal" alias="projectTotal"/>		
+		<typeAlias type="com.ln.intranet.dashBoard.model.vo.TaskTotal" alias="taskTotal"/>
+	</typeAliases>
+	
+	<mappers>
+		 <mapper resource="/mappers/meetingRoom-mapper.xml"/>
+		 <mapper resource="/mappers/survey-mapper.xml"/>
+		 <mapper resource="/mappers/dept-mapper.xml"/>
+		 <mapper resource="/mappers/member-mapper.xml"/>
+		 <mapper resource="/mappers/attendance-mapper.xml"/>
+		 <mapper resource="/mappers/notice-mapper.xml"/>
+		 <mapper resource="/mappers/work-mapper.xml"/>
+		 <mapper resource="/mappers/project-mapper.xml"/>
+		 <mapper resource="/mappers/chat-mapper.xml"/>
+		 <mapper resource="/mappers/dashBoard-mapper.xml"/>
+		 <mapper resource="/mappers/main-mapper.xml"/>
+	</mappers>
+
+</configuration>

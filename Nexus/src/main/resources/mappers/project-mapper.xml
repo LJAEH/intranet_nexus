@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="projectMapper">
+
+	<resultMap type="workGeneralList" id="workList_rm">
+		<id property="workNo" 				column="WORK_NO" />
+		<result property="typeNo" 			column="TYPE_NO"/>
+		<result property="title" 				column="TITLE"/>
+		<result property="sendDate" 		column="SEND_DATE"/>
+		<result property="memName" 		column="MEM_NAME"/>
+		<result property="workState" 		column="WORK_STATE"/>
+		<result property="opinion" 			column="OPINION"/>
+		<result property="typeName" 		column="TYPE_NAME"/>
+		<result property="fileRename" 	column="FILE_RENAME"/>
+	</resultMap>
+	
+	<resultMap type="project" id="project_rm">
+		<id property="projectNo" 			column="PROJECT_NO"/>
+		<result property="memNo" 			column="MEM_NO"/>
+		<result property="memName" 		column="MEM_NAME"/>
+		<result property="title" 				column="TITLE"/>
+		<result property="content" 			column="CONTENT"/>
+		<result property="sendDate" 		column="SEND_DATE"/>
+		<result property="approvalDate" 	column="APPROVAL_DATE"/>
+		<result property="start" 				column="START"/>
+		<result property="end" 				column="END"/>
+		<result property="next" 				column="NEXT"/>
+		<result property="approvalList" 	column="APPROVAL_LIST"/>
+		<result property="tempSave" 		column="TEMP_SAVE"/>
+		<result property="workState" 		column="WORK_STATE"/>
+		<result property="opinion" 			column="OPINION"/>
+		<result property="fileRename" 	column="FILE_RENAME"/>
+		<result property="fileOrigin" 		column="FILE_ORIGIN"/>
+		<result property="deptNo" 			column="DEPT_NO"/>
+	</resultMap>
+	
+	<resultMap type="projectTask" id="task_rm">
+		<id property="taskNo" 				column="TASK_NO"/>
+		<result property="projectNo" 		column="PROJECT_NO"/>
+		<result property="memNo" 			column="MEM_NO"/>
+		<result property="memName" 		column="MEM_NAME"/>
+		<result property="title" 				column="TITLE"/>
+		<result property="content" 			column="CONTENT"/>
+		<result property="sendDate" 		column="SEND_DATE"/>
+		<result property="approvalDate" 	column="APPROVAL_DATE"/>
+		<result property="start" 				column="START"/>
+		<result property="end" 				column="END"/>
+		<result property="next" 				column="NEXT"/>
+		<result property="approvalList" 	column="APPROVAL_LIST"/>
+		<result property="tempSave" 		column="TEMP_SAVE"/>
+		<result property="workState" 		column="WORK_STATE"/>
+		<result property="opinion" 			column="OPINION"/>
+		<result property="fileRename" 	column="FILE_RENAME"/>
+		<result property="fileOrigin" 		column="FILE_ORIGIN"/>
+		<result property="deptNo" 			column="DEPT_NO"/>
+	</resultMap>
+	
+	<resultMap type="projectList" id="projectList_rm">		
+		<id property="projectNo" column="PROJECT_NO"/>		
+		<result property="projectTitle" column="PROJECT_TITLE"/>	
+	</resultMap>
+	
+	
+	<resultMap type="projectTaskList" id="projectTaskList_rm">
+		<id property="taskNo" column="TASK_NO"/>
+		<result property="taskTitle" column="TASK_TITLE"/>				
+		<result property="projectNo" column="PROJECT_NO"/>		
+		<result property="projectTitle" column="PROJECT_TITLE"/>	
+	</resultMap>
+	
+	<!-- 프로젝트 디테일 -->
+	<resultMap type="projectDetail" id="projectDetail_rm">
+		<id property="workNo" column="WORK_NO" />
+		<result property="typeNo" column="TYPE_NO"/>
+		<result property="memNo" column="MEM_NO"/>
+		<result property="title" column="TITLE"/>
+		<result property="sendDate" column="SEND_DATE"/>
+		<result property="content" column="CONTENT"/>
+		<result property="start" column="START"/>
+		<result property="end" column="END"/>
+		<result property="next" column="NEXT"/>
+		<result property="approvalList" column="APPROVAL_LIST"/>
+		<result property="opinion" column="OPINION"/>
+		<result property="fileRename" column="FILE_RENAME"/>
+		<result property="fileOrigin" column="FILE_ORIGIN"/>
+		<result property="memName" column="MEM_NAME"/>
+		<result property="email" column="EMAIL"/>
+		<result property="nextMemName" column="NEXT_MEM_NAME"/>
+		<result property="nextMemEmail" column="NEXT_MEM_EMAIL"/>
+		
+		<collection property="taskList" column="WORK_NO" 
+		javaType="java.util.ArrayList" ofType="projectTaskList" 
+		select="taskCollection"/>
+	</resultMap>
+	
+	<!-- 과제 디테일 -->
+	<resultMap type="workDetail" id="workDetail_rm">
+		<id property="workNo" column="WORK_NO" />
+		<result property="typeNo" column="TYPE_NO"/>
+		<result property="memNo" column="MEM_NO"/>
+		<result property="title" column="TITLE"/>
+		<result property="sendDate" column="SEND_DATE"/>
+		<result property="content" column="CONTENT"/>
+		<result property="start" column="START"/>
+		<result property="end" column="END"/>
+		<result property="next" column="NEXT"/>
+		<result property="approvalList" column="APPROVAL_LIST"/>
+		<result property="opinion" column="OPINION"/>
+		<result property="fileRename" column="FILE_RENAME"/>
+		<result property="fileOrigin" column="FILE_ORIGIN"/>
+		<result property="memName" column="MEM_NAME"/>
+		<result property="email" column="EMAIL"/>
+		<result property="nextMemName" column="NEXT_MEM_NAME"/>
+		<result property="nextMemEmail" column="NEXT_MEM_EMAIL"/>
+	</resultMap>
+	
+	
+	<!-- 프로젝트 생성 -->
+	<insert id="createProject" useGeneratedKeys="true">
+		<selectKey keyProperty="projectNo" resultType="_int" order="BEFORE">
+			SELECT SEQ_PROJECT_NO.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO PROJECT(PROJECT_NO, MEM_NO, TITLE, CONTENT, 
+		SEND_DATE, "START", "END", NEXT, APPROVAL_LIST,
+ 		WORK_STATE, DEPT_NO)
+		VALUES ( #{projectNo}, #{memNo}, #{title}, #{content},
+		DEFAULT, TO_DATE(#{start}, 'YYYY-MM-DD'), TO_DATE(#{end}, 'YYYY-MM-DD'), #{next}, #{approvalList},
+ 		'진행중', #{deptNo})
+	</insert>
+	
+	<!-- 과제생성 -->
+	<insert id="createTask" parameterType="projectTask">
+		<selectKey keyProperty="taskNo" resultType="_int" order="BEFORE">
+			SELECT SEQ_TASK_NO.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO PROJECT_TASK (TASK_NO, PROJECT_NO, TITLE,  DEPT_NO) VALUES (
+		#{taskNo}, #{projectNo}, #{title}, #{deptNo})
+	</insert>
+	
+	<!-- 과제업로드 -->
+	<update id="updateTask">
+		UPDATE PROJECT_TASK
+		SET MEM_NO = #{memNo},
+			CONTENT = #{content},
+			SEND_DATE = SYSDATE,
+			"NEXT" = #{next},
+			APPROVAL_LIST = #{approvalList},
+			WORK_STATE = '진행중'
+		WHERE TASK_NO = #{taskNo}			
+	</update>
+	
+	<!-- 프로젝트파일 업로드 -->
+	<insert id="insertProjectFile" parameterType="file" useGeneratedKeys="true">
+		<selectKey keyProperty="fileNo" resultType="_int" order="BEFORE">
+			SELECT SEQ_FILE_NO.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO UPLOAD_FILE(PROJECT_NO, FILE_RENAME, FILE_ORIGIN, FILE_NO) 
+		VALUES(#{projectNo}, #{fileReName}, #{fileOrigin}, #{fileNo})
+	</insert>
+	
+	<!-- 과제파일 업로드 -->
+	<insert id="insertTaskFile" parameterType="file" useGeneratedKeys="true">
+		<selectKey keyProperty="fileNo" resultType="_int" order="BEFORE">
+			SELECT SEQ_FILE_NO.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO UPLOAD_FILE(TASK_NO, FILE_RENAME, FILE_ORIGIN, FILE_NO) 
+		VALUES(#{taskNo}, #{fileReName}, #{fileOrigin}, #{fileNo})
+	</insert>
+
+	<!-- 상신함 프로젝트 리스트 (현재날짜) -->	
+	<select id="projectSendList" resultMap="workList_rm">
+		SELECT PROJECT_NO AS WORK_NO ,'4' AS TYPE_NO, '프로젝트' AS TYPE_NAME, TITLE , SEND_DATE ,WORK_STATE, OPINION , FILE_RENAME
+		FROM PROJECT
+		LEFT JOIN UPLOAD_FILE USING(PROJECT_NO)
+		WHERE MEM_NO = #{memNo}
+		AND TO_CHAR(SEND_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+		ORDER BY SEND_DATE DESC
+	</select>
+
+	<!-- 상신함 과제 리스트 (현재날짜) -->
+	<select id="taskSendList" resultMap="workList_rm">
+		SELECT TASK_NO AS WORK_NO ,'5' AS TYPE_NO, '과제' AS TYPE_NAME, TITLE , SEND_DATE ,WORK_STATE, OPINION , FILE_RENAME
+		FROM PROJECT_TASK
+		LEFT JOIN UPLOAD_FILE USING(TASK_NO)
+		WHERE MEM_NO = #{memNo}
+		AND TO_CHAR(SEND_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+		ORDER BY SEND_DATE DESC
+	</select>	
+	
+	<!-- 프로젝트 리스트 조회  -->
+	<select id="pList" parameterType="_int" resultMap="projectList_rm">
+		SELECT PROJECT_NO , P.TITLE AS PROJECT_TITLE
+		FROM PROJECT P 
+		JOIN PROJECT_TASK PT USING (PROJECT_NO)
+		WHERE P.DEPT_NO = #{deptNo}
+		AND P.WORK_STATE = '승인'
+		AND PT.WORK_STATE IS NULL
+		GROUP BY PROJECT_NO, P.TITLE
+		ORDER BY PROJECT_NO ASC
+	</select>
+	
+	<!-- 프로젝트/과제 리스트 조회  -->
+	<select id="ptList" parameterType="_int" resultMap="projectTaskList_rm">
+		SELECT PROJECT_NO , P.TITLE AS PROJECT_TITLE, TASK_NO, PT.TITLE AS TASK_TITLE 
+		FROM PROJECT P
+		JOIN PROJECT_TASK PT USING (PROJECT_NO)
+		WHERE PT.DEPT_NO = #{deptNo}
+		AND P.WORK_STATE = '승인' 
+		AND PT.WORK_STATE IS NULL
+		ORDER BY PT.TASK_NO ASC
+	</select>
+	
+	
+	<!-- 프로젝트 디테일 조회 -->
+	<select id="projectDetail" parameterType="_int" resultMap="projectDetail_rm">
+		SELECT PROJECT_NO AS WORK_NO, 4 AS TYPE_NO, MEM_NO, TITLE, SEND_DATE, CONTENT, "START", "END" ,"NEXT", 
+		APPROVAL_LIST, OPINION, FILE_RENAME, FILE_ORIGIN, MEM_NAME, EMAIL,
+		(SELECT MEM_NAME FROM "MEMBER" m WHERE MEM_NO = P."NEXT") AS NEXT_MEM_NAME,
+		(SELECT EMAIL FROM "MEMBER" m WHERE MEM_NO = P."NEXT") AS NEXT_MEM_EMAIL
+		FROM PROJECT P
+		LEFT JOIN UPLOAD_FILE USING(PROJECT_NO)
+		LEFT JOIN MEMBER USING(MEM_NO)
+		WHERE PROJECT_NO = #{projectNo}
+	</select>
+	
+	<!-- 프로젝트 디테일 과제 콜렉션 -->
+	<select id="taskCollection" resultMap="projectTaskList_rm">
+		SELECT TASK_NO, TITLE AS TASK_TITLE
+		FROM PROJECT_TASK
+		WHERE PROJECT_NO = #{workNo}
+	</select>
+	
+	<!-- 과제 디테일 조회 -->	
+	<select id="taskDetail" resultMap="workDetail_rm">
+		SELECT TASK_NO AS WORK_NO, 5 AS TYPE_NO, MEM_NO, TITLE, SEND_DATE, CONTENT ,"NEXT", 
+		APPROVAL_LIST, OPINION, FILE_RENAME, FILE_ORIGIN, MEM_NAME, EMAIL,
+		(SELECT MEM_NAME FROM "MEMBER" m WHERE MEM_NO = PT."NEXT") AS NEXT_MEM_NAME,
+		(SELECT EMAIL FROM "MEMBER" m WHERE MEM_NO = PT."NEXT") AS NEXT_MEM_EMAIL
+		FROM PROJECT_TASK PT
+		LEFT JOIN UPLOAD_FILE USING(TASK_NO)
+		LEFT JOIN MEMBER USING(MEM_NO)
+		WHERE TASK_NO = #{taskNo}
+	</select>
+	
+	<!-- 프로젝트 수신함 조회 -->	
+	<select id="projectInbox" resultMap="workList_rm">
+		SELECT PROJECT_NO AS WORK_NO, 4 AS TYPE_NO , '프로젝트' AS TYPE_NAME ,  TITLE , MEM_NAME , SEND_DATE , WORK_STATE , OPINION , FILE_RENAME 
+		FROM PROJECT
+		JOIN "MEMBER" m USING (MEM_NO)
+		LEFT JOIN UPLOAD_FILE USING(PROJECT_NO)
+		WHERE NEXT = #{memNo}
+		AND WORK_STATE = '진행중'
+		AND TEMP_SAVE IS NULL
+		ORDER BY SEND_DATE DESC
+	</select>
+
+	<!-- 과제 수신함 조회 -->		
+	<select id="taskInbox" resultMap="workList_rm">
+		SELECT TASK_NO AS WORK_NO, 5 AS TYPE_NO , '과제' AS TYPE_NAME ,  TITLE , MEM_NAME , SEND_DATE , WORK_STATE , OPINION , FILE_RENAME 
+		FROM PROJECT_TASK
+		JOIN "MEMBER" m USING (MEM_NO)
+		LEFT JOIN UPLOAD_FILE USING(TASK_NO)
+		WHERE NEXT = #{memNo}
+		AND WORK_STATE = '진행중'
+		AND TEMP_SAVE IS NULL
+		ORDER BY SEND_DATE DESC
+	</select>
+	
+	
+	<!-- 프로젝트 반려 승인 -->
+	<update id="projectApproval">
+		<if test="btnName == 'reject'">
+			UPDATE "PROJECT"
+			<set>
+				APPROVAL_DATE = SYSDATE,
+				WORK_STATE = '반려',
+				APPROVAL_LIST = #{approvalList},
+				<if test="opinion != null">OPINION = #{opinion}</if>
+			</set>
+			WHERE PROJECT_NO = #{workNo}
+		</if>
+		<if test="btnName == 'approve'">
+			UPDATE "PROJECT"
+			<set>
+				APPROVAL_DATE = SYSDATE,
+				<if test = "next == ''">
+					WORK_STATE = '승인',				
+				</if>
+				<if test = "next != ''">
+					NEXT = #{next},
+				</if>
+				APPROVAL_LIST = #{approvalList}			
+			</set>
+			WHERE PROJECT_NO = #{workNo}
+		</if>
+	</update>
+	
+	<!-- 과제 -->
+	<update id="taskApproval">
+		<if test="btnName == 'reject'">
+			UPDATE "PROJECT_TASK"
+			<set>
+				APPROVAL_DATE = SYSDATE,
+				WORK_STATE = '반려',
+				APPROVAL_LIST = #{approvalList},
+				<if test="opinion != null">OPINION = #{opinion}</if>
+			</set>
+			WHERE TASK_NO = #{workNo}
+		</if>
+		<if test="btnName == 'approve'">
+			UPDATE "PROJECT_TASK"
+			<set>
+				APPROVAL_DATE = SYSDATE,
+				<if test = "next == ''">
+					WORK_STATE = '승인',				
+				</if>
+				<if test = "next != ''">
+					NEXT = #{next},
+				</if>
+				APPROVAL_LIST = #{approvalList}			
+			</set>
+			WHERE TASK_NO = #{workNo}
+		</if>
+	</update>
+	
+	
+	<!-- 프로젝트 취소 -->
+	<delete id="projectFileDelete" parameterType="_int">
+		DELETE FROM UPLOAD_FILE WHERE PROJECT_NO = #{workNo}
+	</delete>
+	<delete id="projectCancle" parameterType="_int">
+		DELETE FROM "PROJECT" WHERE PROJECT_NO = #{workNo}
+	</delete>
+	
+	
+	<!-- 과제 취소 -->
+	<delete id="taskFileDelete" parameterType="_int">
+			DELETE FROM UPLOAD_FILE WHERE TASK_NO = #{workNo}
+	</delete>
+	<delete id="taskCancle" parameterType="_int">
+		DELETE FROM "PROJECT_TASK" WHERE TASK_NO = #{workNo}
+	</delete>
+	
+</mapper>

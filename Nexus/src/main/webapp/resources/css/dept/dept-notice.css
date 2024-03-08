@@ -1,0 +1,260 @@
+/* 틀을 잡아 놓기 위한 스타일 */
+section {
+
+
+
+  display: flex;
+}
+
+/* 사이드바 전체 스타일 */
+.side-bar {
+  width: 300px;
+  height: 100vh;
+
+  background-color: var(--side);
+
+}
+
+@media(max-height:937px) {
+  .side-bar {
+    height: unset !important;
+  }
+}
+
+@media(max-height:878.29px) {
+  .side-bar {
+    height: unset !important;
+  }
+}
+
+.side-bar ul {
+  margin: 0;
+  padding: 0;
+}
+
+
+/* 사이드바 제목 스타일 */
+.side-bar h1 {
+  font-size: 30px;
+
+  margin: 0;
+
+  padding: 60px 0 40px 35px;
+
+  color: var(--black);
+}
+
+
+/* 사이드바 부제목 스타일 */
+.side-bar li {
+  list-style: none;
+
+}
+
+
+/* 사이드바 선택 되었을때 스타일 */
+/* FIXME:아래 주석처리 되어 있는 코드를 바꿔서 현재페이지에 맞게 지정 해주면 될것 */
+.side-bar li:nth-child(1) {
+  border-left: 10px solid var(--primary500);
+
+  background-color: rgb(230, 232, 236, 50%);
+
+}
+
+.side-bar li:first-child>a:first-child>span:first-child {
+
+  color: var(--primary400);
+}
+
+.side-bar li:first-child>a:first-child {
+  padding-left: 30px;
+}
+
+.side-bar li:nth-child(2)>a:first-child {
+  padding-left: 40px;
+}
+
+.side-bar li:nth-child(3)>a:first-child {
+  padding-left: 40px;
+}
+
+/* 사이드바 메뉴 선택부분이 두번째 이상일때 */
+
+
+
+/* 사이드바 호버 스타일 시작 ------------------------------*/
+
+*,
+*:after,
+*:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+a:hover,
+a:focus {
+  outline: none;
+}
+
+.side-bar a span {
+  display: block;
+  padding: 7px 15px;
+  text-transform: uppercase;
+  /* text-align: center; */
+  transition: all 0.5s ease 0s;
+}
+
+.side-bar a:hover span {
+  color: var(--primary600);
+}
+
+.side-bar a:before,
+.side-bar a:after,
+.side-bar a span:before,
+.side-bar a span:after {
+  content: "";
+  width: 25%;
+  height: 100%;
+  border-radius: 30px;
+  /* border: 1px solid var(--primary500); */
+  border-left: none;
+  border-right: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s ease 0s;
+  background-color: rgb(230, 232, 236, 50%);
+
+}
+
+.side-bar a:after {
+  left: 25%;
+}
+
+.side-bar a span:before {
+  left: 50%;
+}
+
+.side-bar a span:after {
+  left: 75%;
+}
+
+.side-bar a:hover:before,
+.side-bar a:hover:after,
+.side-bar a:hover span:before,
+.side-bar a:hover span:after {
+  border-radius: 0;
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+
+.menu a {
+  color: var(--black);
+
+  padding: 15px 0 5px 55px;
+
+
+  font-size: 24px;
+
+  position: relative;
+  display: block;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+/* 사이드바 호버 스타일 끝 ------------------------------*/
+
+/* 컨텐츠 영역 전체 */
+.content-all-page {
+  width: 100%;
+  height: 100%;
+
+  margin-bottom: 10rem;
+}
+
+/* 컨텐츠 상단 부분 */
+.content-all-top-area {
+  margin: auto;
+  margin-top: 70px;
+  margin-left: 130px;
+  margin-right: 130px;
+}
+
+.content-all-top-area-detail {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 컨텐츠 상단 텍스트 */
+.content-all-top-text1 {
+  font-weight: bold;
+  font-size: 16px;
+
+  color: var(--gray400);
+}
+
+.content-all-top-text2 {
+  font-weight: bold;
+  font-size: 24px;
+
+  color: var(--black);
+}
+
+
+/* 컨텐츠 하단 부분 */
+.content-all-bottom-area {
+  margin: auto;
+
+  margin-left: 130px;
+  margin-right: 130px;
+}
+
+
+
+/* 직급 구분하는 모달 */
+.custom-modal-container {
+  background-color: #f8f8f8;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.custom-message {
+  padding: 20px;
+  text-align: center;
+}
+
+.custom-message h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: var(--primary400);
+}
+
+.custom-message p {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: var(--gray700);
+}
+
+
+/* 사이드바 반응형 */
+.sidebarMenuInner li:nth-child(2) span {
+  color: var(--primary500);
+}
+
+/* 게시글 없을때 */
+.noneNotice th {
+  border-bottom: none !important;
+  text-align: center !important;
+  padding-top: 40px;
+}
+
+.noneNotice:hover {
+  background-color: unset !important;
+  cursor: unset !important;
+}

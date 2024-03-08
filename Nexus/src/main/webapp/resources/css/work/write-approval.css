@@ -1,0 +1,680 @@
+/* 결재 모달창 */
+
+#modalWrap, #approver-modal-wrap {
+  position: fixed;
+  z-index: 5;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+
+}
+
+#approver-modal-wrap {
+  z-index: 7;
+  height: 120vh;
+}
+
+.work-modalBody, .approver-modal-Body {
+  min-width: 570px;
+  min-height: 100px;
+  max-width: 85%;
+  max-height: 85%;
+  background: white;
+  border-radius: 10px;
+  margin: 0 auto;
+  margin-top: 7%;
+  margin-bottom: 7%;
+  position: relative;
+  padding: 30px;
+  overflow: auto;
+}
+
+.work-modalBody.modal-open {
+  /* 모달이 열릴 때 애니메이션 효과 추가 */
+  animation: 0.35s ease-in-out 0s 1 normal forwards running modalAniOpen;
+}
+
+
+/* 모달창 나올때 애니메이션 효과 */
+@keyframes modalAniOpen {
+
+  0% {
+      opacity: 0;
+      transform: translateY(-30px);
+  }
+
+  100% {
+      opacity: 1;
+      transform: translateY(0px);
+  }
+}
+
+.work-modalBody.modal-close {
+  /* 모달이 닫힐 때 애니메이션 효과 추가 */
+  animation: 0.35s ease-in-out 0s 1 normal forwards running modalAniClose;
+}
+
+/* 모달창 닫을때 애니메이션 효과 */
+@keyframes modalAniClose {
+  0% {
+      opacity: 1;
+      transform: translateY(0px);
+  }
+
+  100% {
+      opacity: 0;
+      transform: translateY(-30px);
+  }
+}
+
+.work-modalBody h1, .approver-modal-Body h1 {
+  color: var(--black);
+
+  font-size: 24px;
+}
+
+/* 닫기 버튼 */
+#closeBtn, #approver-closeBtn ,#write-closeBtn {
+  float: right;
+  color: var(--black);
+
+  cursor: pointer;
+
+}
+
+/* 닫기 버튼 이미지 */
+#closeBtn img, #approver-closeBtn img, #write-closeBtn img {
+  width: 18px;
+  height: 18px;
+}
+
+/* 모달 선 */
+.work-modal-line {
+  border-bottom: 1px solid var(--gray300);
+
+  margin-top: 20px;
+}
+
+/* -------------------------------------- */
+
+/*모달 제목 , 내용 스타일 */
+.work-modalBody p {
+  color: var(--gray400);
+
+  margin-top: 36px;
+}
+
+.work-modal-template select{
+  width: 25%;
+  height: 40px;
+} 
+
+.work-modal-title input {
+  width: 100%;
+  height: 50px;
+
+  border: 1px solid var(--gray300);
+  border-radius: 5px;
+
+  background-color: var(--gray50);
+
+  padding: 10px;
+
+  font-size: 18px;
+
+  outline: none;
+}
+
+.work-modal-title input:focus {
+  border-color: var(--primary400);
+
+  background-color: white;
+}
+
+.work-modal-title input::placeholder {
+  color: var(--gray200);
+}
+
+.work-modal-detail textarea,
+.work-modal-businessDetail textarea {
+  width: 100%;
+  height: 350px !important;
+  border: 1px solid var(--gray300);
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  overflow: hidden;
+  outline: none;
+  resize: none;
+}
+
+.note-editable > p {
+  margin-top: 0 !important;
+  color: black !important;
+}
+
+.work-modalBody input{
+  width: 100%;
+  height: 50px;
+  border: 1px solid var(--gray300);
+  border-radius: 5px;
+  background-color: var(--gray50);
+  padding: 10px;
+  font-size: 18px;
+  outline: none;
+}
+
+.work-modal-approver input{
+  width: 100%;
+  height: 50px;
+  border: 1px solid var(--gray300);
+  border-radius: 5px;
+  background-color: var(--gray50);
+  padding: 10px;
+  font-size: 18px;
+  outline: none;
+
+}
+
+.date-Box{
+  display: flex;
+  gap: 5%;
+}
+
+.work-modal-startDate,.work-modal-endDate {
+  width: 50%;
+}
+
+/* -------------------------------------- */
+
+/* 일반 체크  */
+#normal-checkd {
+  display: none;
+}
+/* 프로젝트 체크 */
+#project-checked{
+  display: none;
+}
+/* 과제 체크 */
+#assignment-checked{
+  display: none;
+}
+
+/* 선탁창 일반 체크 시 템플릿 */
+.work-modal-template-select{
+  display: flex;
+}
+
+.work-modal-template-select select {
+  margin-right: 10px;
+}
+/* 프로젝트 박스 (과제추가버튼)*/
+.work-modal-projectBox{
+  float: right;
+  margin-block: 5px;
+  cursor: pointer;
+}
+/* 프로젝트 박스 (과제명, 과제내용) */
+.projectBox {
+  margin-top: 36px;
+  border: 1px solid var(--gray300);
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+/* 프로젝트 박스 (버튼) */
+.projectBox div > button{
+  width: 50px;
+  height: 30px;
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--black);
+  background-color: var(--gray50);
+  border: none;
+  border-radius: 5px;
+  vertical-align: middle;
+  line-height: normal;
+  cursor: pointer;
+}
+/* 결재자 박스 */
+.work-modal-approverBox{
+  float: right;
+  margin-block: 20px;
+  cursor: pointer;
+}
+
+/*결재자 메뉴*/
+
+*{
+  text-decoration: none;
+}
+
+#approver-box p {
+
+  display: block;
+  
+  color: #333;
+
+  margin-top: 0;
+
+  padding: 10px;
+  
+  }
+  /* 결재영역 3등분 */
+  .dept-Box, .team-Box, .teamone-Box {
+    border: 2px solid var(--primary400);
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 10px;
+    margin: 5px 0px 5px;
+    width: 30%;
+    list-style: none;
+    text-align: center;
+  }
+  /* 결재영역 p태그 */
+  .dept-Box > p ,.team-Box > p {
+    background-color: var(--primary400);
+    color: white !important;
+    border-radius: 10px;
+    margin: 10px !important;
+  } 
+
+  .executives{
+    border-bottom: 1px solid white;
+    list-style: none;
+  }
+
+  .executives > p ,.dept > p{
+    font-size: 14px;
+    margin: 0 !important;
+    padding: 7px;
+    height: 30px;
+    background-color: var(--primary500);
+    color: white;
+    cursor: pointer;
+  } 
+
+  .dept-list, .senior-list, .team-list{
+    display: none;
+    list-style: none;
+    font-size: 14px;
+    font-weight: 200;
+    height: 100%;
+    border-bottom: 1px solid var(--gray300);
+    cursor: pointer;
+  }
+
+  .end{
+    border-bottom: none !important;
+  }
+
+  .dept-list > p:hover{
+    font-weight: 500;
+    color: var(--black);
+    background-color: var(--gray100);
+    animation: rubberBand 1s infinite; 
+    animation-duration: 2s;
+    animation-direction: alternate;;
+  }
+
+  .team-list > p:hover, .senior-list > p:hover{
+    font-weight: 500;
+    color: var(--black);
+    background-color: var(--gray100);
+    animation: flip 2s infinite; 
+    animation-duration: 2s;
+    animation-direction: alternate;
+  }
+
+  
+ 
+  .teamone-Box{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .team-Box ul {
+    list-style: none;
+  }
+
+  .dept-list ul{
+    display: none;
+    position: relative;
+  }
+
+  .approval-team, .senior-team {
+    display: none;
+    list-style: none;
+    flex-direction: column;
+    margin: 10px 5px 10px 5px;
+    border-radius: 5px;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .approval-team >, p .senior-team > p{
+  color: white;
+  }
+
+  .approval-team input, .senior-team input {
+    width: 10px;
+    height: 10px;
+    display: none;
+  }
+
+  .approval-team label, .senior-team label {
+    color: var(--primary500);
+    padding: 5px;
+    font-size: 17px;
+    margin-right: 0;
+    text-shadow: 1px 1px var(--primary200);
+}
+
+/* 체크된 라벨 영역 */
+.divBox{
+  margin: 8px 0px 8px 0px;
+}
+
+.divBox input:checked + label{
+  padding: 5px 35px 5px 35px;
+  font-weight: 300;
+  text-align: center;
+  line-height: 5px;
+  color: white;
+  border-radius: 5px;
+  transition: all 0.2s;
+  background: var(--primary500);
+}
+
+.divBox input:checked + label:hover{
+  margin-top: 15px;
+  margin-bottom: 5px; 
+  box-shadow: 0px 0px 0px 0px var(--primary300);
+}
+
+
+/* 여기까지 */
+
+.show{
+  display: block;
+}
+
+/* 결재자 박스 */
+
+.approver-modal-container{
+  width: 100%;
+  height: 300px;
+  border: 1px solid var(--gray300);
+  border-radius: 5px;
+  background-color: var(--gray50);
+  padding: 10px;
+  font-size: 18px;
+  outline: none;
+  overflow: auto;
+  display: flex;
+  gap: 5%;
+  max-height: 300px; /* 원하는 최대 높이 설정 */
+}
+
+.approver-modal-container p{
+  padding: 10px 0px 10px;
+  margin: 0 !important;
+}
+
+/* 결재자 모달선 */
+.approver-modal-line1, .approver-modal-line2{
+  border-bottom: 1px solid var(--gray300);
+  margin:  20px 0px;
+
+}
+/* 확인 취소 버튼 */
+.approver-submit-reset-btns{
+  float: right;
+}
+
+/* 파일업로드된 스타일 */
+.work-preview ol {
+  list-style: none;
+}
+
+#file-uploads{
+  display: none;
+}
+
+/* 파일 올리기 지우기 버튼 스타일 */
+.checked-file-box {
+  margin: 20px 0px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  line-height: 5px;
+}
+
+.checked-file-box label {
+  width: 90px;
+  height: 35px;
+
+  padding: 13px;
+
+  margin-right: 0;
+  display: inline-block;
+
+  font-size: 14px;
+
+  color: white;
+
+  background-color: var(--primary400);
+
+  vertical-align: middle;
+
+  line-height: normal;
+
+  border-radius: 5px;
+
+  cursor: pointer;
+
+
+}
+
+.work-file-box{
+  margin-top: 20px;
+}
+
+.work-file-box label {
+  width: 90px;
+  height: 35px;
+  padding: 13px;
+  display: inline-block;
+  font-size: 14px;
+  color: white;
+  background-color: var(--primary400);
+  vertical-align: middle;
+  line-height: normal;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.work-file-box label:hover {
+  background-color: var(--primary500);
+  transition: all 1s;
+}
+
+.work-filebox input[type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+
+.work-file-box button, .checked-file-box button {
+  width: 90px;
+  height: 35px;
+  padding: 13px;
+  font-size: 14px;
+  color: var(--black);
+  background-color: var(--gray50);
+  border: none;
+  border-radius: 5px;
+  vertical-align: middle;
+  line-height: normal;
+  cursor: pointer;
+}
+
+.work-file-box button:hover {
+  background-color: var(--gray100);
+  transition: all 1s;
+}
+
+/* 임시 저장 */
+.work-modal-save{
+  margin-top: 20px;
+}
+/* 임시저장 버튼 */
+#save-draft{
+  width: 90px;
+  height: 35px;
+  padding: 13px;
+  font-size: 14px;
+  color: white;
+  background-color: var(--primary400);
+  border: none;
+  border-radius: 5px;
+  vertical-align: middle;
+  line-height: normal;
+  cursor: pointer;
+
+}
+
+/* 확인 취소 버튼 */
+.work-submit-reset-btns {
+  margin-top: 20px;
+
+  float: right;
+}
+
+#cancell-btn, #approver-cancell-btn {
+  width: 60px;
+  height: 30px;
+
+  color: var(--black);
+
+  font-size: 14px;
+
+  border: none;
+  border-radius: 5px;
+
+  background-color: var(--gray50);
+
+  padding-top: 5px;
+
+  cursor: pointer;
+}
+
+#cancell-btn:hover {
+  background-color: var(--gray100);
+  transition: all 1s;
+}
+
+#success-btn, #approver-success-btn, #tempSuccessBtn {
+  width: 60px;
+  height: 30px;
+
+  color: white;
+
+  font-size: 14px;
+
+  border: none;
+  border-radius: 5px;
+
+  background-color: var(--primary400);
+
+  padding-top: 5px;
+
+  cursor: pointer;
+
+  margin-bottom: 20%;
+}
+
+#success-btn:hover {
+  background-color: var(--primary500);
+  transition: all 1s;
+}
+
+#tempSuccessBtn:hover {
+  background-color: var(--primary500);
+  transition: all 1s;
+}
+
+/* ------------------------------------ */
+input[type='date'] {
+  border: none;
+  position: relative;
+  width: 100%;
+  padding: 10px;  
+  background-color: var(--gray50);
+  box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  text-align: left;
+  font-size: 100%;
+  margin-bottom: 20px;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  color: transparent;
+  cursor: pointer;
+}
+
+input[type='date']:valid::before {
+  display: none;
+}
+
+.taskTitleSpan{
+  margin-top : 10px;
+}
+
+/* 결재자 추가 부서창 호버효과 */
+.heartBeat:hover{
+  animation: heartBeat 2s infinite; 
+  animation-duration: 2s;
+  animation-direction: alternate;
+}
+
+
+/* 결재자선택창 폰트조정 */
+.approver-modal-Body label{
+  font-family: 'NanumSquareNeo-Variable';
+}
+
+/* 썸머노트 툴바 */
+.note-toolbar{
+  white-space: pre-wrap;
+
+}
+
+
+.note-resizebar{
+  display: none;
+}
+  
+.table-bordered > tbody > tr > td {
+  border: 1px solid !important;
+}

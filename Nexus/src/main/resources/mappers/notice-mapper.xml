@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="noticeMapper">
+
+	<resultMap type="notice" id="notice_rm">
+		<id property="noticeNo" column="NOTICE_NO" />
+		<result property="title" column="TITLE"/>
+		<result property="content" column="CONTENT"/>
+		<result property="file" column="FILE"/>
+		<result property="createDate" column="CREATE_DATE"/>
+		<result property="noticeType" column="NOTICE_TYPE"/>
+	</resultMap>
+	
+	<resultMap type= "noticeDetail" id="NoticeDetail_rm">
+		<id property="noticeNo" column="NOTICE_NO" />
+		<result property="memNo" column="MEM_NO" />
+		<result property="memName" column="MEM_NAME" />
+		<result property="title" column="TITLE" />
+		<result property="content" column="CONTENT" />
+		<result property="noticeFileRename" column="FILE_RENAME" />
+		<result property="noticeFileOrigin" column="FILE_ORIGIN" />
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="noticeType" column="NOTICE_TYPE" />
+	</resultMap>
+	
+	
+	<select id="selectPublicNoticeList" resultMap="notice_rm">
+		SELECT NOTICE_NO, TITLE, CREATE_DATE FROM NOTICE
+		WHERE NOTICE_TYPE = 0
+		ORDER BY NOTICE_NO DESC
+	</select>
+	
+	<select id="totalList" parameterType="_int" resultType="_int">
+		SELECT COUNT(*) FROM NOTICE
+		WHERE NOTICE_TYPE = 0
+	</select>
+	
+		<select id="totalCount" parameterType="_int" resultType="_int">
+		SELECT COUNT(*) FROM NOTICE
+		WHERE NOTICE_TYPE = #{deptNo}
+	</select>
+	
+		<select id="selectDeptNoticeList" resultMap="notice_rm">
+		SELECT NOTICE_NO, TITLE,
+		TO_CHAR(CREATE_DATE , 'YYYY-MM-DD') AS CREATE_DATE 
+		FROM NOTICE
+		WHERE NOTICE_TYPE = #{deptNo}
+		ORDER BY NOTICE_NO DESC
+	</select>
+	
+	<select id="deptNoticeDetail" parameterType="_int" resultMap="NoticeDetail_rm">
+		SELECT TITLE, CONTENT, 
+			COALESCE(FILE_RENAME, NULL) AS FILE_RENAME,
+			COALESCE(FILE_ORIGIN, NULL) AS FILE_ORIGIN,
+			CREATE_DATE
+			FROM NOTICE
+			LEFT JOIN UPLOAD_FILE USING (NOTICE_NO)
+			WHERE NOTICE_NO = #{noticeNo} AND NOTICE_TYPE = #{deptNo}
+	</select>
+	
+		<!-- 공지사항 작성 -->
+		<insert id="insertNotice" parameterType="notice" useGeneratedKeys="true">
+			<selectKey keyProperty="noticeNo" resultType="_int" order="BEFORE">
+				SELECT SEQ_NOTICE_NO.NEXTVAL FROM DUAL
+			</selectKey>
+				INSERT INTO NOTICE VALUES(
+				#{noticeNo}, #{title}, #{content}, NULL ,SYSDATE, 0)
+		</insert>
+		
+		<insert id="insertNoticeFile" parameterType="file" useGeneratedKeys="true">
+			<selectKey keyProperty="fileNo" resultType="_int" order="BEFORE">
+				SELECT SEQ_FILE_NO.NEXTVAL FROM DUAL
+			</selectKey>
+				INSERT INTO UPLOAD_FILE VALUES(DEFAULT, DEFAULT, DEFAULT, #{noticeNo} , DEFAULT, #{fileReName}, #{fileOrigin}, #{fileNo})
+			
+		</insert>
+		
+		<select id="noticeDetail" parameterType="_int" resultMap="NoticeDetail_rm">
+			SELECT TITLE, CONTENT, 
+			COALESCE(FILE_RENAME, NULL) AS FILE_RENAME,
+			COALESCE(FILE_ORIGIN, NULL) AS FILE_ORIGIN,
+			CREATE_DATE
+			FROM NOTICE
+			LEFT JOIN UPLOAD_FILE USING (NOTICE_NO)
+			WHERE NOTICE_NO = #{noticeNo} AND NOTICE_TYPE = 0
+		
+		</select>
+		
+		<insert id="insertDeptNotice" parameterType="notice" useGeneratedKeys="true">
+			<selectKey keyProperty="noticeNo" resultType="_int" order="BEFORE">
+				SELECT SEQ_NOTICE_NO.NEXTVAL FROM DUAL
+			</selectKey>
+				INSERT INTO NOTICE VALUES(
+				#{noticeNo}, #{title}, #{content}, NULL ,SYSDATE, #{deptNo})
+		</insert>
+		
+				<insert id="insertDeptNoticeFile" parameterType="file" useGeneratedKeys="true">
+			<selectKey keyProperty="fileNo" resultType="_int" order="BEFORE">
+				SELECT SEQ_FILE_NO.NEXTVAL FROM DUAL
+			</selectKey>
+				INSERT INTO UPLOAD_FILE VALUES(DEFAULT, DEFAULT, DEFAULT, #{noticeNo} , DEFAULT, #{fileReName}, #{fileOrigin}, #{fileNo})
+			
+		</insert>
+	
+		<!-- 공지사항 수정 -->
+		<update id="updateNotice">
+			UPDATE NOTICE SET 
+			TITLE = #{title},
+			CONTENT = #{content}
+			WHERE NOTICE_NO = #{noticeNo}
+		</update>
+		
+		<!-- 공지사항 삭제 -->
+		<delete id="deleteNotice">
+			DELETE NOTICE
+			WHERE NOTICE_NO = #{noticeNo}
+		</delete>
+		
+		<!-- 공지사항 파일 삭제 -->
+		<delete id="deleteFileNotice">
+			DELETE UPLOAD_FILE 
+			WHERE NOTICE_NO =  #{noticeNo}
+			
+		</delete>
+
+		<!-- 파일 수정 -->
+		<update id="updateFileNotice">
+			 UPDATE UPLOAD_FILE SET
+			 FILE_RENAME = #{fileReName},
+			 FILE_ORIGIN = #{fileOrigin}
+			 WHERE NOTICE_NO = #{noticeNo}
+		</update>
+	
+</mapper>

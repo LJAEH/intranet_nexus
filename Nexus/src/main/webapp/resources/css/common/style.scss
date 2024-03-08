@@ -1,0 +1,196 @@
+:root {
+  --rad: .7rem;
+  --dur: .3s;
+  --color-dark: #2f2f2f;
+
+  --btn-width: 6rem;
+  --bez: cubic-bezier(0, 0, 0.43, 1.49);
+}
+
+// Main styles
+.employee-search form {
+  position: relative;
+  width: 30rem;
+  background: var(--primary400);
+  border-radius: var(--rad);
+
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-bottom: 150px;
+
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+
+.employee-search input,
+button {
+  height: 50px;
+
+  border: none;
+  color: white;
+  font-size: 18px;
+}
+
+.employee-search input {
+  color: var(--black);
+}
+
+.employee-search input::placeholder {
+  color: var(--gray200);
+}
+
+.employee-search input[type="search"] {
+  outline: 0;
+  width: 100%;
+  background: white;
+  padding: 0 1.6rem;
+  border-radius: var(--rad);
+  appearance: none;
+  transition: all var(--dur) var(--bez);
+  transition-property: width, border-radius;
+  z-index: 1;
+  position: relative;
+}
+
+.employee-search button {
+  display: none;
+  position: absolute;
+  top: 27px;
+  right: 0;
+  width: var(--btn-width);
+  font-weight: bold;
+  background: var(--primary400);
+  border-radius: 0 var(--rad) var(--rad) 0;
+}
+
+.employee-search input:not(:placeholder-shown) {
+  border-radius: var(--rad) 0 0 var(--rad);
+  width: calc(100% - var(--btn-width));
+
+  +button {
+    display: block;
+    cursor: pointer;
+  }
+}
+
+.employee-search label {
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0;
+  border: 0;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
+
+
+
+// 셀렉
+$dark: var(--primary400);
+$semilight: white;
+$blue: var(--primary400);
+
+.drop {
+
+  font-family: pfs-bold;
+  color: $semilight;
+  text-transform: uppercase;
+  position: relative;
+  transition: width 0.5s;
+  will-change: width;
+
+  .option {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #485761;
+
+    &:not(.active) {
+      display: none;
+      opacity: 0;
+      transform: translateY(-50%);
+    }
+  }
+
+  &.visible {
+    animation: bounce 1s;
+    width: 100%;
+
+    &:before,
+    &:after {
+      border-color: #fff;
+    }
+
+    &:before {
+      opacity: 0;
+    }
+
+    &:after {
+      opacity: 1;
+    }
+
+    .option {
+      color: #fff;
+      display: block;
+    }
+  }
+
+  &.opacity {
+
+    .option {
+      transform: translateZ(0);
+      opacity: 1;
+
+      @for $i from 0 to 10 {
+        &:nth-child(#{$i}) {
+          transition: opacity 0.5s 0.1s*$i, transform 0.5s 0.1s*$i;
+        }
+      }
+    }
+  }
+
+  &.withBG {
+
+    .option {
+      transition: background-color 0.1s;
+
+      &:not(.placeholder):hover {
+        background-color: $blue;
+      }
+
+      &:not(.placeholder).active {
+        background-color: $blue;
+      }
+    }
+  }
+
+  &:after,
+  &:before {
+    content: "";
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    width: 0.75em;
+    height: 0.75em;
+    border: 0.2em solid $semilight;
+    transform: rotate(45deg);
+    transform-origin: 90% 10%;
+    transition: opacity 0.2s;
+  }
+
+  &:before {
+    border-left: none;
+    border-top: none;
+    top: 1em;
+  }
+
+  &:after {
+    border-right: none;
+    border-bottom: none;
+    opacity: 0;
+  }
+}
+
+.mini-hack {
+  opacity: 0;
+  transform: translateY(-50%);
+}

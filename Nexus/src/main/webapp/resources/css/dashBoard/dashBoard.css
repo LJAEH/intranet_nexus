@@ -1,0 +1,593 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 틀을 잡아 놓기 위한 스타일 */
+section {
+    display: flex;
+
+}
+
+span,
+p {
+    margin-top: 4px;
+}
+
+/* 인적자원/ 프로젝트 전체 div */
+.mainDiv {
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+}
+
+.mainDiv>div {
+    margin: 0 20px;
+}
+
+
+
+.container {
+    margin: 40px auto 40px;
+    width: 100%;
+    height: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.personnel-management-left {
+    border: 1px solid var(--gray100);
+    border-radius: 10px;
+}
+
+.personnel-management-left .hr-head {
+    padding: 20px 20px 0 20px;
+}
+
+.personnel-management-left .doughnut-div {
+    padding: 0 20px 20px 20px;
+}
+
+.personnel-management-right {
+    border: 1px solid var(--gray100);
+    border-radius: 10px;
+}
+
+.personnel-management-right .info-div {
+    padding: 20px;
+}
+
+.project-management-left {
+    border: 1px solid var(--gray100);
+    border-radius: 10px;
+}
+
+.project-management-left .project-head {
+    padding: 20px 20px 0 20px;
+}
+
+.project-management-left .polar-div {
+    padding: 0 20px 20px 20px;
+}
+
+.project-management-right {
+    border: 1px solid var(--gray100);
+    border-radius: 10px;
+}
+
+.project-management-right .project-info-div {
+    padding: 20px;
+}
+
+.managePageA {
+    font-size: 30px;
+    color: var(--black);
+    font-weight: bold;
+}
+
+.team-selector-box {
+    display: flex;
+    
+}
+
+.more-box {
+    line-height: 35px;
+}
+
+.more-box > a {
+    color: var(--gray600);
+    text-decoration: none;
+    padding-top: 10px;
+}
+
+.more-box > a:hover {
+    color: var(--primary400);
+    border-bottom: 1px solid var(--primary400);
+}
+
+
+/* 인적자원 div */
+
+.hr-content {
+    display: flex;
+    padding: 0 20px;
+    width: 100%;
+}
+
+.info-div {
+    width: 100%;
+}
+
+/* 도넛타입 */
+#doughnut {
+    margin-top: 10px;
+    width: 400px;
+    height: 250px;
+}
+
+/* 극좌표형 타입 */
+#polarArea {
+    width: 400px;
+    height: 400px;
+}
+
+
+/* 오른쪽 div */
+.team-work-status {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* 팀별 인원 정보 css */
+.mem-info {
+    display: flex;
+    flex-direction: column;
+    width: 60px;
+}
+
+.name {
+    font-weight: bold;
+}
+
+.job {
+    color: var(--gray300);
+}
+
+
+
+
+/* 자동생성 css */
+
+.team-selector {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.team-work-status {
+    display: flex;
+}
+
+.team-bar {
+    display: flex;
+}
+
+.team-bar>div {
+    margin: 5px 5px 0;
+}
+
+.team-data {
+    width: 100%;
+}
+
+/* 프로그레스 바 div */
+.bar-info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* 프로그레스바 스타일 */
+#progressBar {
+    width: 100%;
+    appearance: none;
+}
+
+#progressBar::-webkit-progress-bar {
+    height: 20px;
+    background: #f0f0f0;
+    border-radius: 4px;
+}
+
+#progressBar::-webkit-progress-value {
+    border-radius: 4px;
+    background: #04A2E4;
+}
+
+#progressBar.underBlue::-webkit-progress-value {
+    border-radius: 4px;
+    background: #04A2E4;
+}
+
+#progressBar.overOrange::-webkit-progress-value {
+    border-radius: 4px;
+    background: rgb(255, 180, 126);
+
+}
+
+.progressTemp {
+    display: flex;
+    justify-content: space-between;
+}
+
+.progressTemp span {
+    color: var(--gray500);
+    margin-top: 4px;
+    font-size: 12px;
+}
+
+
+
+
+/* 워크타임 */
+.work-time {
+    display: flex;
+    flex-direction: column;
+}
+
+.extend {
+    color: var(--primary300);
+    font-size: 14px;
+}
+
+
+/*==========================================================================
+========================      프로젝트      =================================
+===========================================================================*/
+
+
+.project-div {
+    margin-top: 30px;
+}
+
+.project-content {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+    width: 100%;
+}
+
+.project-info-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.selectedProject {
+    width: 100%;
+    height: 50px;
+
+}
+
+.selectedTask {
+    height: 50px;
+}
+
+
+
+
+.tab_content {
+    width: 100%;
+    text-align: right;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+/* input을 안보이게 처리 */
+input[type="radio"]+label {
+    display: inline-block;
+    padding: 10px 20px 6px;
+    margin-right: 6px;
+    background: var(--gray50);
+    color: var(--black);
+    cursor: pointer;
+}
+
+/* 버튼 공통 속성 */
+input[type="radio"]:checked+label {
+    background: var(--primary500);
+    color: white;
+}
+
+/* 선택된 버튼속성 */
+
+.conbox {
+    display: none;
+    text-align: left;
+    padding: 20px 20px;
+    box-sizing: border-box;
+}
+
+/* 컨텐츠박스 공통 속성 */
+input[id="tab01"]:checked~.con1 {
+    display: block;
+}
+
+/* 인풋에 체크가 해당 요소보이게 설정 */
+input[id="tab02"]:checked~.con2 {
+    display: block;
+}
+
+input[id="tab03"]:checked~.con3 {
+    display: block;
+}
+
+
+
+/* 색참조 */
+:root {
+
+    /* 검정색 대신 쓰일 색 */
+    --black: #02142E;
+
+    /* 포인트 색상 */
+    --primary800: rgb(4, 40, 92);
+    --primary700: rgb(7, 59, 137);
+    --primary600: rgb(9, 79, 183);
+    --primary500: rgb(11, 99, 229);
+    --primary400: rgb(60, 130, 234);
+    --primary300: rgb(109, 161, 239);
+    --primary200: rgb(157, 193, 245);
+    --primary100: #CEE0FA;
+    --primary50: #F0F5FF;
+
+    /* 회색계열 색상 */
+    --gray700: #42526B;
+    --gray600: #6A778B;
+    --gray500: #838E9E;
+    --gray400: #9BA4B1;
+    --gray300: #B4BBC5;
+    --gray200: #CDD2D8;
+    --gray100: #E6E8EC;
+    /* 메인페이지 배경색 */
+    --gray50: #F5F6F7;
+
+    /* 사이드바 색상 */
+    --side: #F9F9F9;
+
+    /* 초록색 */
+    --green: #00cc00;
+
+}
+
+/* 과제생성 */
+.projects {
+    background-color: #273142;
+    border: 1px solid #313D4F;
+    overflow-x: auto;
+    width: 100%;
+}
+
+.projects-inner {
+    border-radius: 4px;
+}
+
+.projects-header {
+    color: white;
+    padding: 22px;
+}
+
+.projects-header .count,
+.projects-header .title {
+    display: inline-block;
+}
+
+.projects-header .count {
+    color: #738297;
+}
+
+.projects-header .title {
+    font-size: 21px;
+}
+
+.projects-header .title+.count {
+    margin-left: 5px;
+}
+
+.projects-table {
+    background: white;
+    width: 100%;
+}
+
+.projects-table td {
+    color: var(--gray700);
+    padding: 5px 22px;
+    vertical-align: middle;
+    width: 25%;
+}
+
+.projects-table th {
+    color: var(--gray700);
+    padding: 10px 22px;
+    vertical-align: middle;
+}
+
+.projects-table td p {
+    font-size: 15px;
+}
+
+.projects-table td p:last-of-type {
+    color: #738297;
+    font-size: 11px;
+}
+
+
+.projects-table-tr1 th {
+    background-color: #B2A4FF;
+    color: #FFFDF6;
+}
+
+.projects-table-tr2 th {
+    background-color: #FFB4B4;
+    color: #FFFDF6;
+}
+
+.projects-table tr {}
+
+.projects-table tr:hover {
+    background-color: #f7f5f2;
+}
+
+.projects-table tr:not(:last-of-type) {
+    border-bottom: 1px solid #313D4F;
+}
+
+
+.projects-table .status>form {
+    float: right;
+}
+
+
+.status {
+    text-align: center;
+}
+
+.status-text {
+    background-color: #0079FF;
+    border-radius: 15px;
+    padding: 10px 15px;
+    color: white;
+}
+
+.status-orange {
+    background-color: #FAAB78;
+    border-radius: 15px;
+    padding: 10px 15px;
+    color: white;
+}
+
+.status-red {
+    background-color: #FF0060;
+    border-radius: 15px;
+    padding: 10px 15px;
+    color: white;
+}
+
+.status-green {
+    background-color: #00DFA2;
+    border-radius: 15px;
+    padding: 10px 15px;
+    color: white;
+}
+
+.danger-item {
+    border-left: 4px solid #A84D43;
+}
+
+
+
+
+
+/* 테이블 크기 정하기 */
+tr :nth-child(1) {
+    text-align: left;
+}
+
+tr :nth-child(2) {
+    width: 25%;
+    text-align: left;
+}
+
+tr>td:nth-child(1) {
+    width: 35%;
+    text-align: left;
+}
+
+td :nth-child(1)>p {
+    font-size: 16px;
+}
+
+tr :nth-child(3) {
+    width: 15%;
+    text-align: left;
+}
+
+
+
+/* 진행도표시기 */
+
+.flex-wrapper {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.single-chart {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+
+.circular-chart {
+    display: block;
+    height: 30px;
+}
+
+.circle-bg {
+    fill: none;
+    stroke: #eee;
+    stroke-width: 4.5;
+}
+
+.circle {
+    fill: none;
+    stroke-width: 4;
+    stroke-linecap: round;
+    animation: progress 1s ease-out forwards;
+}
+
+
+.circular-chart.orange .circle {
+    stroke: #ff9f00;
+}
+
+.circular-chart.green .circle {
+    stroke: #4CC790;
+}
+
+.circular-chart.blue .circle {
+    stroke: #3c9ee5;
+}
+
+.percentage {
+    fill: #666;
+    font-family: sans-serif;
+    font-weight: bold;
+    text-anchor: middle;
+    margin-top: 5px;
+}
+
+.text-red {
+    color: red !important;
+}
+
+
+.mem-info {
+    min-width: 50px;
+}
+
+.work-time {
+    min-width : 70px;
+}

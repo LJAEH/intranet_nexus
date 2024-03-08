@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="meetingRoomMapper">
+
+	<resultMap type="meetingRoom" id="meetingRoom_rm">
+		<id property="reservationNo" 		column="RESERVATION_NO" />
+		<result property="memNo" 			column="MEM_NO"/>
+		<result property="memName" 		column="MEM_NAME"/>
+		<result property="jobName" 		column="JOB_NAME"/>
+		<result property="roomNo" 			column="ROOM_NO"/>
+		<result property="reservationDate" column="RESERVATION_DATE"/>
+		<result property="reservationTime" column="RESERVATION_TIME"/>		
+	</resultMap>
+		
+	<insert id="reservationRoom" parameterType="meetingRoom" useGeneratedKeys="true" keyProperty="reservationNo">
+	    <selectKey keyProperty="reservationNo" resultType="_int" order="BEFORE">
+	        SELECT SEQ_RESERVATION_NO.NEXTVAL FROM DUAL
+	    </selectKey>
+	    INSERT INTO MEETING_ROOM (RESERVATION_NO, MEM_NO, RESERVATION_DATE, RESERVATION_TIME, ROOM_NO)
+	    SELECT #{reservationNo}, #{memNo},
+	    TO_CHAR(TO_DATE(#{reservationDate}, 'YYYY-MM-DD'), 'YYYY-MM-DD'),
+	    #{reservationTime}, #{roomNo}
+	    FROM DUAL
+	    WHERE NOT EXISTS (
+	        SELECT 1 FROM MEETING_ROOM
+	        WHERE RESERVATION_DATE = TO_CHAR(TO_DATE(#{reservationDate}, 'YYYY-MM-DD'), 'YYYY-MM-DD')
+	        AND RESERVATION_TIME = #{reservationTime}
+	        AND ROOM_NO = #{roomNo}
+	    )
+	</insert>
+			
+	<!-- 예약한 회의실 조회 -->
+	<select id="returnResult" parameterType="_int" resultMap="meetingRoom_rm">
+		SELECT 
+			RESERVATION_NO, MEM_NO, 
+			MEM_NAME, JOB_NAME, ROOM_NO, 
+			RESERVATION_DATE, RESERVATION_TIME
+		FROM MEETING_ROOM 
+		JOIN MEMBER USING(MEM_NO)
+		JOIN JOB  USING(JOB_NO)
+		WHERE RESERVATION_NO = #{resultNo}
+	</select>
+	
+	<select id="reservationList" resultMap="meetingRoom_rm">
+		SELECT 
+			RESERVATION_NO, MEM_NO, 
+			MEM_NAME, JOB_NAME, ROOM_NO, 
+			RESERVATION_DATE, RESERVATION_TIME
+		FROM MEETING_ROOM 
+		JOIN MEMBER USING(MEM_NO)
+		JOIN JOB j USING(JOB_NO)
+	</select>
+	
+	<delete id="deleteReservation" parameterType="_int">
+		DELETE FROM MEETING_ROOM WHERE RESERVATION_NO = #{reservationNo}
+	</delete>
+	
+	<!-- 해달 달의 미팅룸 리스트 불러오기(kjw) --> 
+	<select id="meetingRoomList" resultMap="meetingRoom_rm">
+		SELECT RESERVATION_NO,RESERVATION_DATE, RESERVATION_TIME, ROOM_NO  
+		FROM MEETING_ROOM
+		WHERE SUBSTR(RESERVATION_DATE, 0, 7) = #{inputDate}
+		ORDER BY RESERVATION_DATE
+	</select>
+
+</mapper>

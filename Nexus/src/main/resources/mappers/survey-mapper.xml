@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="surveyMapper">
+	
+	<resultMap type="survey" 	id="survey_rm">
+		<id property="surveyNo" 			column="SURVEY_NO"/>
+		<result property="surveyTopic" 	column="TOPIC"/>
+		<result property="surveyContent" column="CONTENT"/>
+		<result property="start" 				column="START"/>
+		<result property="end" 				column="END"/>
+	</resultMap>
+	
+	<resultMap type="surveyResult" 	id="surveyResult_rm">
+		<id property="surveyNo" 				column="SURVEY_NO"/>
+		<result property="memNo" 				column="MEM_NO"/>
+		<result property="memName" 			column="MEM_NAME"/>
+		<result property="question" 			column="QUESTION"/>
+		<result property="optionNo" 			column="OPTION_NO"/>
+		<result property="optionAnnotation" column="OPTION_ANNOTATION"/>
+		<result property="optionMemberCount" column="OPTION_MEMBER_COUNT"/>
+	</resultMap>
+	
+	<resultMap type="surveyPreview" id="surveyPreview_rm">
+		<id property="surveyNo" 			column="SURVEY_NO"/>
+		<result property="surveyTopic" 	column="TOPIC"/>
+		<result property="start" 				column="START"/>
+		<result property="end" 				column="END"/>
+		<result property="respMember"   column="RESP_MEMBER"/>
+		<result property="totalMember" 	column="TOTAL_MEMBER"/>
+		<result property="participation" 	column="PARTICIPATION"/>
+	</resultMap>
+	
+	<!-- 설문생성 -->
+	<insert id="createSurvey" parameterType="survey" useGeneratedKeys="true" keyProperty="surveyNo" >
+		<selectKey keyProperty="surveyNo" resultType="_int" order="BEFORE">
+			SELECT SEQ_SURVEY_NO.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO SURVEY VALUES (
+		#{surveyNo}, #{surveyTopic}, #{surveyContent}, DEFAULT, TO_DATE(#{end}, 'yyyy.mm.dd')
+		)
+	</insert>
+	
+	<!-- 지문생성 -->
+	<insert id="createResult" parameterType="surveyResult" >
+		INSERT INTO SURVEY_RESULT VALUES (
+		#{surveyNo}, #{memNo}, #{question}, #{optionNo}, #{optionAnnotation}
+		)
+	</insert>
+	
+	<!-- 설문수 총합 -->
+	<select id="totalCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM SURVEY
+	</select>
+	
+	<!-- 전체 설문 리스트 조회 -->
+	<select id="surveyList" parameterType="_int"  resultMap="surveyPreview_rm">
+		SELECT
+		  S.SURVEY_NO,
+		  TOPIC,
+		  TO_CHAR("START", 'YYYY.MM.DD') AS "START",
+		  TO_CHAR("END", 'YYYY.MM.DD') AS "END",
+		  COUNT(DISTINCT R.MEM_NO)-1 AS RESP_MEMBER,
+		  (SELECT COUNT(*) FROM MEMBER)-1 AS TOTAL_MEMBER,
+		  CASE WHEN EXISTS (
+		    SELECT 1
+		    FROM SURVEY_RESULT
+		    WHERE SURVEY_NO = S.SURVEY_NO
+		      AND MEM_NO = #{memNo}
+		  ) THEN 1 ELSE 0 END AS PARTICIPATION
+		FROM SURVEY S
+		LEFT JOIN SURVEY_RESULT R ON S.SURVEY_NO = R.SURVEY_NO
+		GROUP BY S.SURVEY_NO, TOPIC, "START", "END"
+		ORDER BY "START" DESC
+	</select>
+	
+	<!-- 설문디테일조회 -->
+	<select id="surveyDetail" parameterType="_int" resultMap="survey_rm">
+		SELECT SURVEY_NO, TOPIC, CONTENT, 
+		  TO_CHAR("START", 'YYYY.MM.DD') AS "START",
+		  TO_CHAR("END", 'YYYY.MM.DD') AS "END"
+		FROM SURVEY s
+		WHERE SURVEY_NO = #{surveyNo}
+	</select>
+
+	
+	<!-- 설문참여 -->
+	<insert id="surveyParticipate" parameterType="surveyResult">
+		INSERT INTO SURVEY_RESULT VALUES (
+		#{surveyNo}, #{memNo}, DEFAULT, #{optionNo}, DEFAULT )		
+	</insert>
+	
+	<!-- 전체 멤버 수 조회 -->
+	<select id="totalMember" resultType="_int">
+		SELECT COUNT(*)-1 AS TOTAL_MEMBER
+		FROM MEMBER 
+	</select>
+	
+	<!-- 응답 인원 수 조회 -->
+	<select id="respMember" parameterType="_int" resultType="_int">
+		SELECT COUNT(DISTINCT R.MEM_NO)-1 AS RESP_MEMBER
+		FROM SURVEY S
+		LEFT JOIN SURVEY_RESULT R ON S.SURVEY_NO = R.SURVEY_NO
+		WHERE S.SURVEY_NO = #{surveyNo}	
+	</select>
+	
+	
+	<!-- 지문리스트조회 -->
+	<select id="surveyResultList" parameterType="_int" resultMap="surveyResult_rm">
+		SELECT SR.SURVEY_NO, SR.MEM_NO, M.MEM_NAME, QUESTION, SR.OPTION_NO, SR.OPTION_ANNOTATION,
+		    (SELECT COUNT(DISTINCT SR2.MEM_NO)-1
+		    FROM SURVEY_RESULT SR2
+		    WHERE SR2.SURVEY_NO = SR.SURVEY_NO AND SR2.OPTION_NO = SR.OPTION_NO
+		    ) AS OPTION_MEMBER_COUNT
+		FROM SURVEY_RESULT SR
+		JOIN MEMBER M ON M.MEM_NO = SR.MEM_NO
+		WHERE SR.SURVEY_NO = #{surveyNo} AND SR.MEM_NO = 0
+		ORDER BY SR.OPTION_NO ASC
+	</select>
+	
+	<!-- 옵션별 참여인원 조회 -->
+	<select id="optionMemberCount" parameterType="_int" resultType="_int">
+		SELECT COUNT(DISTINCT MEM_NO)-1
+		FROM SURVEY_RESULT
+		WHERE SURVEY_NO = #{surveyNo}
+		GROUP BY OPTION_NO
+		ORDER BY OPTION_NO ASC
+	</select>	
+	
+	<!-- 설문삭제 + 설문지문삭제 -->
+	<delete id="surveyDelete" parameterType="_int">
+		DELETE FROM SURVEY WHERE SURVEY_NO = #{surveyNo}
+	</delete>
+	<delete id="surveyResultDelete" parameterType="_int">
+		DELETE FROM SURVEY_RESULT WHERE SURVEY_NO = #{surveyNo}
+	</delete>
+	
+</mapper>

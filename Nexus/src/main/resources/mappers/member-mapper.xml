@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="memberMapper">
+	
+	<resultMap type="member" id="member_rm">
+		<id 	property="memNo" 	    		column="MEM_NO" />
+		<result property="jobNo"  			column="JOB_NO"/>
+		<result property="jobName" 		column="JOB_NAME"/>
+		<result property="teamNo" 			column="TEAM_NO"/>
+		<result property="teamName" 		column="TW_NAME"/>
+		<result property="deptNo" 			column="DEPT_NO"/>
+		<result property="deptName" 		column="DEPT_NAME"/>
+		<result property="memId" 			column="MEM_ID"/>
+		<result property="memPw" 			column="MEM_PW"/>
+		<result property="memName"  	column="MEM_NAME"/>
+		<result property="memRNo" 		column="MEM_RNO"/>
+		<result property="memTel" 			column="TEL"/>
+		<result property="memAddress" 	column="ADDRESS"/>
+		<result property="memEmail"		column="EMAIL"/>
+		<result property="enrollDate" 		column="ENROLL_DATE"/>
+		<result property="departureDate" column="DEPARTURE_DATE"/>
+		<result property="secession" 		column="SECESSION"/>
+	</resultMap>
+	
+	<!-- 로그인 -->
+	<select id="login" parameterType="member" resultMap="member_rm">
+		SELECT MEM_NO, JOB_NO, JOB_NAME, TEAM_NO, TW_NAME, TEL, MEMBER.DEPT_NO, DEPT_NAME, MEM_ID,
+				MEM_PW, MEM_NAME, MEM_RNO,  ADDRESS, EMAIL,
+				TO_CHAR( ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE,
+				TO_CHAR( DEPARTURE_DATE, 'YYYY-MM-DD') AS DEPARTURE_DATE,
+				SECESSION 
+		FROM MEMBER
+		JOIN JOB USING (JOB_NO) 
+		JOIN TEAM USING (TEAM_NO)
+		JOIN DEPARTMENT ON MEMBER.DEPT_NO = DEPARTMENT.DEPT_NO 
+		WHERE MEM_ID = #{memId}
+		AND SECESSION = 'N'
+	</select>
+	
+		
+	<select id="selectChatMember" parameterType="member" resultMap="member_rm">
+		SELECT MEM_NO, JOB_NO, TEAM_NO, MEM_NAME FROM MEMBER
+		ORDER BY DEPT_NO DESC
+		
+	</select>
+	
+	<!-- 현재 비밀번호 암호화 조회 -->
+	<select id="selectEncPw" resultType="string">
+		SELECT MEM_PW
+		FROM MEMBER
+		WHERE MEM_NO = ${memNo}
+	</select>
+	
+	<!-- 비밀번호 변경 -->
+	<select id="changePw">
+		UPDATE MEMBER SET
+		MEM_PW = #{newPw}
+		WHERE MEM_NO = ${memNo}
+	</select>
+	
+	<!-- 직원 추가 -->
+	<insert id="signUp" useGeneratedKeys="true"> 
+		<selectKey keyProperty="memNo" resultType="_int" order="BEFORE">
+				SELECT SEQ_MEM_NO.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO MEMBER
+		VALUES(#{memNo},
+			#{jobNo},
+			#{teamNo},
+			#{deptNo}, 
+			'NEXUS'||SEQ_MEM_NO.CURRVAL,
+			DEFAULT,
+			#{memName},
+			#{memRNo},
+			#{memTel},
+			#{memAddress},
+			#{memEmail},
+			DEFAULT,
+			DEFAULT,
+			DEFAULT
+			)
+	</insert>
+	
+	<!-- 직원 검색 -->
+	<select id="searchMember" parameterType="member" resultMap="member_rm">
+		SELECT MEM_NAME, MEM_RNO, TEL, EMAIL, ADDRESS, JOB_NO, DEPT_NO, TEAM_NO, SECESSION, MEM_NO
+		FROM MEMBER
+		WHERE MEM_NO = #{memNo}
+	</select>
+	
+	<!-- 직원 정보 수정 -->
+	<update id="update">
+		UPDATE MEMBER SET
+		MEM_NAME = #{memName},
+		MEM_RNO = #{memRNo},
+		TEL = #{memTel},
+		EMAIL = #{memEmail},
+		ADDRESS = #{memAddress},
+		JOB_NO = #{jobNo},
+		DEPT_NO = #{deptNo},
+		TEAM_NO = #{teamNo}
+		WHERE MEM_NO = #{memNo}
+	</update>
+	
+	<!-- 직원 퇴사 처리 -->
+	<update id="delete">
+		UPDATE MEMBER SET
+		DEPARTURE_DATE = SYSDATE,
+		SECESSION = 'Y'
+		WHERE MEM_NO = #{memNo}
+	</update>
+	
+	<!-- 퇴사할 직원 정보 조회 -->
+	<select id="deleteSearch" parameterType="member" resultMap="member_rm">
+		SELECT MEM_NAME, JOB_NAME, TW_NAME, DEPT_NAME, SECESSION, MEM_NO
+		FROM MEMBER
+		JOIN JOB USING (JOB_NO)
+		JOIN TEAM USING (TEAM_NO)
+		JOIN DEPARTMENT ON MEMBER.DEPT_NO = DEPARTMENT.DEPT_NO 
+		WHERE MEM_NO = #{memNo}
+	</select>
+	
+	<!-- 직원 전체 조회 -->
+	<select id="selectAll" parameterType="member" resultMap="member_rm">
+		SELECT MEM_NO, MEM_ID, MEM_NAME, JOB_NAME, DEPT_NAME, TW_NAME, MEM_RNO, TEL, ADDRESS, EMAIL, 
+		TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE, 
+		DECODE(DEPARTURE_DATE, NULL, ' - ', TO_CHAR(DEPARTURE_DATE, 'YYYY-MM-DD')) AS DEPARTURE_DATE 
+		FROM MEMBER
+		JOIN JOB USING (JOB_NO)
+		JOIN TEAM USING (TEAM_NO)
+		JOIN DEPARTMENT ON MEMBER.DEPT_NO = DEPARTMENT.DEPT_NO
+		ORDER BY MEM_NO
+	</select>
+	
+	<!-- 검색한 직원 조회 -->
+	<select id="searchMem" parameterType="member" resultMap="member_rm">
+		SELECT MEM_NO, MEM_ID, MEM_NAME, JOB_NAME, DEPT_NAME, TW_NAME, MEM_RNO, TEL, ADDRESS, EMAIL, 
+		TO_CHAR(ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE, 
+		DECODE(DEPARTURE_DATE, NULL, ' - ', TO_CHAR(DEPARTURE_DATE, 'YYYY-MM-DD')) AS DEPARTURE_DATE
+		FROM MEMBER
+		JOIN JOB USING (JOB_NO)
+		JOIN TEAM USING (TEAM_NO)
+		JOIN DEPARTMENT ON MEMBER.DEPT_NO = DEPARTMENT.DEPT_NO
+		WHERE MEM_NAME = #{memName}
+		ORDER BY JOB_NO 
+	</select>
+	
+	
+</mapper>

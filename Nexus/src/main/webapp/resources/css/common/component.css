@@ -1,0 +1,1733 @@
+/* 폰트 스타일 */
+@font-face {
+    font-family: 'OTWelcomeRA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeRA.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2&display=swap');
+
+/* 셀렉 옵션 폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+@font-face {
+    font-family: 'NanumSquareNeo-Variable';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+/* 바디 스타일 */
+* {
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+
+    font-family: 'OTWelcomeRA';
+
+    white-space: nowrap;
+}
+
+p {
+    margin: 0;
+}
+
+
+
+/* 스크롤바 스타일 */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #F5F5F5;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-image: -webkit-gradient(linear,
+            left bottom,
+            left top,
+            color-stop(0.44, rgb(122, 153, 217)),
+            color-stop(0.72, rgb(73, 125, 189)),
+            color-stop(0.86, rgb(28, 58, 148)));
+}
+
+
+.modalBody input {
+    font-family: 'NanumSquareNeo-Variable';
+    font-size: 14px;
+}
+
+.payment-modalBody input {
+    font-family: 'NanumSquareNeo-Variable';
+    font-size: 14px;
+}
+
+select {
+    font-family: 'NanumSquareNeo-Variable';
+    font-size: 14px;
+
+}
+
+option {
+    font-family: 'NanumSquareNeo-Variable';
+    font-size: 14px;
+}
+
+/* 박스 전체 스타일 */
+.main-box {
+    background-color: white;
+    border-radius: 10px;
+
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+
+    margin: 40px;
+    margin-right: 0;
+
+    padding: 20px;
+}
+
+.main-box2 {
+    background-color: white;
+    border-radius: 10px;
+
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+
+    margin: 0px 40px;
+    margin-right: 0;
+
+    padding: 20px;
+}
+
+
+/* 박스 내부 상단부 스타일 */
+.main-box-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.main-box-title-left {
+    display: flex;
+}
+
+
+.main-box-title-left img {
+    width: 16px;
+    height: 16px;
+
+    margin-right: 5px;
+}
+
+.main-box-title-left span {
+    margin: 0;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    color: var(--primary700);
+}
+
+
+
+.main-box-title-right {
+    display: flex;
+}
+
+.main-box-title-right img {
+    width: 10px;
+    height: 10px;
+
+    margin-left: 5px;
+}
+
+.main-box-title-right span {
+    margin: 0;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    color: var(--primary700);
+}
+
+.main-box-title-right a {
+    text-decoration: none;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    color: var(--primary700);
+
+}
+
+.main-box-title-right a:hover {
+    color: #FFC759;
+}
+
+/* 메인박스 내부 타이틀 폰트 스타일 */
+.main-font-title {
+    font-size: 20px;
+    font-weight: bold;
+
+    color: var(--black);
+}
+
+
+/* 채팅 */
+.chatting-img {
+    width: 60px;
+    height: 60px;
+
+    border-radius: 15px;
+
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+}
+
+.chatting-box {
+    position: fixed;
+
+    bottom: 40px;
+    right: 40px;
+}
+
+
+/* 기본 버튼 스타일 */
+.omen-btn {
+    width: 120px;
+    height: 35px;
+
+    border: none;
+    border-radius: 10px;
+
+    padding: 10px;
+
+    background-color: var(--primary400);
+
+    font-size: 16px;
+
+    color: white;
+
+    cursor: pointer;
+}
+
+.omen-btn:hover {
+    background-color: var(--primary500);
+    transition: all 1s;
+}
+
+
+
+
+/* 공지사항 테이블스타일 */
+.notice-table {
+    margin-top: 80px;
+}
+
+.notice-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+.notice-table table th {
+    color: var(--gray600);
+
+    border-bottom: 1px solid var(--gray500);
+
+    padding-bottom: 10px;
+
+    font-size: 14px;
+    font-weight: 100;
+}
+
+.notice-table table td {
+    color: var(--black);
+
+    border-bottom: 1px solid var(--gray100);
+
+    padding: 20px 0;
+}
+
+.notice-table tbody>tr:hover {
+    cursor: pointer;
+
+    background-color: var(--gray100);
+}
+
+.notice-table table th:first-child {
+    width: 200px;
+
+    text-align: left;
+}
+
+.notice-table table th:nth-child(2) {
+    width: 1300px;
+
+    text-align: left;
+}
+
+.notice-table table th:nth-child(3) {
+    text-align: left;
+}
+
+
+
+
+/* 모달 박스 스타일 */
+/* 공지사항 모달창 */
+
+#modalWrap {
+    position: fixed;
+    z-index: 1;
+
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+
+}
+
+
+
+.modalBody {
+    min-width: 570px;
+    min-height: 100px;
+    max-width: 80%;
+    max-height: calc(100vh - 90px);
+
+    background: white;
+    border-radius: 10px;
+
+    margin: 0 auto;
+    margin-top: 100px;
+
+    position: relative;
+    padding: 30px;
+    overflow: auto;
+    width: 80%;
+
+}
+
+.modalBody.modal-open {
+    /* 모달이 열릴 때 애니메이션 효과 추가 */
+    animation: 0.35s ease-in-out 0s 1 normal forwards running modalAniOpen;
+}
+
+
+/* 모달창 나올때 애니메이션 효과 */
+@keyframes modalAniOpen {
+
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+.modalBody.modal-close {
+    /* 모달이 닫힐 때 애니메이션 효과 추가 */
+    animation: 0.35s ease-in-out 0s 1 normal forwards running modalAniClose;
+}
+
+/* 모달창 닫을때 애니메이션 효과 */
+@keyframes modalAniClose {
+    0% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+}
+
+.modalBody h1 {
+    color: var(--black);
+
+    font-size: 24px;
+}
+
+
+#closeBtn {
+    float: right;
+    color: var(--black);
+
+    cursor: pointer;
+
+}
+
+#closeBtn img {
+    width: 18px;
+    height: 18px;
+}
+
+/* 모달 선 */
+.modal-line {
+    border-bottom: 1px solid var(--gray300);
+
+    margin-top: 20px;
+}
+
+
+/* 제목 , 내용 스타일 */
+.modalBody p {
+    color: var(--gray400);
+
+    margin-top: 36px;
+}
+
+.modal-title input {
+    width: 100%;
+    height: 50px;
+
+    border: 1px solid var(--gray300);
+    border-radius: 5px;
+
+    background-color: var(--gray50);
+
+    padding: 10px;
+
+    font-size: 18px;
+
+    outline: none;
+}
+
+.modal-title input:focus {
+    border-color: var(--primary400);
+
+    background-color: white;
+}
+
+.modal-title input::placeholder {
+    color: var(--gray200);
+}
+
+.modal-detail textarea {
+    width: 100%;
+    max-height: 350px;
+
+    border: 1px solid var(--gray300);
+    border-radius: 5px;
+
+    padding: 10px;
+
+    font-size: 16px;
+
+    overflow: hidden;
+
+    outline: none;
+    resize: none;
+}
+
+/* 파일업로드된 스타일 */
+.preview ol {
+    list-style: none;
+}
+
+/* 파일 올리기 지우기 버튼 스타일 */
+.file-box {
+    margin-top: 20px;
+}
+
+.file-box label {
+    width: 90px;
+    height: 35px;
+
+    padding: 13px;
+    display: inline-block;
+
+    font-size: 14px;
+
+    color: white;
+
+    background-color: var(--primary400);
+
+    vertical-align: middle;
+
+    line-height: normal;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+
+}
+
+.file-box label:hover {
+    background-color: var(--primary500);
+    transition: all 1s;
+}
+
+.filebox input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+
+.file-box button {
+    width: 90px;
+    height: 35px;
+
+    padding: 13px;
+
+    font-size: 14px;
+
+    color: var(--black);
+
+    background-color: var(--gray50);
+
+    border: none;
+    border-radius: 5px;
+
+    vertical-align: middle;
+
+    line-height: normal;
+
+    cursor: pointer;
+}
+
+.file-box button:hover {
+    background-color: var(--gray100);
+    transition: all 1s;
+}
+
+/* 수정했을때 파일 */
+.check-file-box {
+    margin-top: 20px;
+    display: none;
+}
+
+.check-file-box label {
+    width: 90px;
+    height: 35px;
+
+    padding: 13px;
+    display: inline-block;
+
+    font-size: 14px;
+
+    color: white;
+
+    background-color: var(--primary400);
+
+    vertical-align: middle;
+
+    line-height: normal;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+
+}
+
+.check-file-box label:hover {
+    background-color: var(--primary500);
+    transition: all 1s;
+}
+
+.check-filebox input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+
+.check-file-box button {
+    width: 90px;
+    height: 35px;
+
+    padding: 13px;
+
+    font-size: 14px;
+
+    color: var(--black);
+
+    background-color: var(--gray50);
+
+    border: none;
+    border-radius: 5px;
+
+    vertical-align: middle;
+
+    line-height: normal;
+
+    cursor: pointer;
+}
+
+.check-file-box button:hover {
+    background-color: var(--gray100);
+    transition: all 1s;
+}
+
+#check-file-uploads {
+    opacity: 0;
+}
+
+
+
+
+/* 확인 취소 버튼 */
+.notice-submit-reset-btns {
+    margin-top: 20px;
+
+    float: right;
+}
+
+#cancell-btn {
+    width: 60px;
+    height: 30px;
+
+    color: var(--black);
+
+    font-size: 14px;
+
+    border: none;
+    border-radius: 5px;
+
+    background-color: var(--gray50);
+
+    padding-top: 5px;
+
+    cursor: pointer;
+}
+
+#cancell-btn:hover {
+    background-color: var(--gray100);
+    transition: all 1s;
+}
+
+#success-btn {
+    width: 60px;
+    height: 30px;
+
+    color: white;
+
+    font-size: 14px;
+
+    border: none;
+    border-radius: 5px;
+
+    background-color: var(--primary400);
+
+    padding-top: 5px;
+
+    cursor: pointer;
+}
+
+#success-btn:hover {
+    background-color: var(--primary500);
+    transition: all 1s;
+}
+
+
+/* 공지사항 수정모달창------------------------------------------------------ */
+
+#check-modalWrap {
+    position: fixed;
+    z-index: 1;
+
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+
+}
+
+
+
+.check-modalBody {
+    min-width: 570px;
+    min-height: 100px;
+    max-width: 80%;
+    max-height: calc(100vh - 90px);
+
+    background: white;
+    border-radius: 10px;
+
+    margin: 0 auto;
+    margin-top: 100px;
+
+    position: relative;
+    padding: 30px;
+    overflow: auto;
+    width: 80%;
+}
+
+.check-modalBody.check-modal-open {
+    /* 모달이 열릴 때 애니메이션 효과 추가 */
+    animation: 0.35s ease-in-out 0s 1 normal forwards running modalAniOpen;
+}
+
+
+
+
+.check-modalBody.check-modal-close {
+    /* 모달이 닫힐 때 애니메이션 효과 추가 */
+    animation: 0.35s ease-in-out 0s 1 normal forwards running modalAniClose;
+}
+
+
+
+.check-modalBody h1 {
+    color: var(--black);
+
+    font-size: 24px;
+}
+
+
+#check-closeBtn {
+    float: right;
+    color: var(--black);
+
+    cursor: pointer;
+
+}
+
+#check-closeBtn img {
+    width: 18px;
+    height: 18px;
+}
+
+/* 모달 선 */
+.modal-line {
+    border-bottom: 1px solid var(--gray300);
+
+    margin-top: 20px;
+}
+
+
+/* 제목 , 내용 스타일 */
+.check-modalBody p {
+    color: var(--gray400);
+
+    margin-top: 36px;
+}
+
+.check-preview p {
+    margin-top: 7px;
+}
+
+.check-modal-title input {
+    width: 100%;
+    height: 50px;
+
+    border: none;
+    border-radius: 5px;
+
+    background-color: var(--gray50);
+
+    color: var(--gray700);
+
+    padding: 10px;
+
+    font-size: 18px;
+
+    outline: none;
+}
+
+
+.check-modal-detail {
+    width: 100%;
+    max-height: 350px;
+
+    border: none;
+    border-top: 1px solid var(--gray300);
+    border-bottom: 1px solid var(--gray300);
+
+    color: var(--gray700);
+
+    padding: 10px;
+
+    font-size: 16px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    outline: none;
+    resize: none;
+}
+
+
+
+.check-modal-detail textarea {
+    width: 100%;
+    max-height: 350px;
+
+    border: 1px solid var(--gray300);
+    border-radius: 5px;
+
+    padding: 10px;
+
+    font-size: 16px;
+
+    overflow: hidden;
+
+    outline: none;
+    resize: none;
+}
+
+.check-modal-detail>p {
+    color: var(--black);
+}
+
+/* 파일업로드된 스타일 */
+.check-preview {
+    width: 100%;
+    height: 50px;
+
+    border: none;
+    border-radius: 5px;
+
+    color: var(--gray700);
+    background-color: var(--gray50);
+
+    font-family: 'Baloo 2';
+
+    text-decoration: underline;
+
+    padding: 10px;
+
+    font-size: 16px;
+
+    list-style: none;
+
+    cursor: pointer;
+}
+
+
+
+/* 삭제 닫기 수정 버튼 */
+.notice-submit-reset-btns {
+    margin-top: 20px;
+
+    float: right;
+}
+
+#check-cancell-btn {
+    width: 60px;
+    height: 30px;
+
+    color: var(--black);
+
+    font-size: 14px;
+
+    border: none;
+    border-radius: 5px;
+
+    background-color: var(--gray50);
+
+    padding-top: 5px;
+
+    cursor: pointer;
+}
+
+#check-cancell-btn:hover {
+    background-color: var(--gray100);
+    transition: all 1s;
+}
+
+#check-success-btn {
+    width: 60px;
+    height: 30px;
+
+    color: white;
+
+    font-size: 14px;
+
+    border: none;
+    border-radius: 5px;
+
+    background-color: var(--primary400);
+
+    padding-top: 5px;
+
+    cursor: pointer;
+}
+
+#check-success-btn:hover {
+    background-color: var(--primary500);
+    transition: all 1s;
+}
+
+#done-btn {
+    width: 80px;
+    height: 30px;
+
+    color: white;
+
+    font-size: 14px;
+
+    border: none;
+    border-radius: 5px;
+
+    background-color: #FFC759;
+
+    padding-top: 5px;
+
+    cursor: pointer;
+}
+
+#done-btn:hover {
+    background-color: #ffb000;
+    transition: all 1s;
+}
+
+#check-remove-btn {
+    width: 60px;
+    height: 30px;
+
+    color: red;
+
+    font-size: 14px;
+
+    border: none;
+    border-radius: 5px;
+
+    background-color: transparent;
+
+    padding-top: 5px;
+
+    cursor: pointer;
+}
+
+#check-remove-btn:hover {
+    background-color: var(--gray50);
+    transition: all 1s;
+}
+
+#done-btn {
+    display: none;
+}
+
+/* sweetAlert 스타일 */
+.swal2-popup {
+    background-color: white !important;
+}
+
+.swal2-title {
+    color: var(--gray600) !important;
+}
+
+.swal2-input {
+    background: white !important;
+
+    border: 1px solid var(--gray400) !important;
+
+    color: var(--black) !important;
+}
+
+
+
+/* 채팅 */
+@import url('https://fonts.googleapis.com/css?family=Red+Hat+Display:400,500,900&display=swap');
+
+.chat-form {
+    display: contents;
+}
+
+.contact {
+    position: relative;
+    padding: 3rem 2rem;
+
+    height: 4.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    direction: ltr;
+
+}
+
+.contact-hover:hover {
+    background-color: #FFF9EE;
+}
+
+.contact .name {
+    font-weight: 500;
+    margin-bottom: 0.125rem;
+}
+
+.contact .message,
+.contact .seen {
+    font-size: 0.9rem;
+    color: #999;
+}
+
+.contact-message {
+    max-width: 15rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.swal2-styled:focus {
+    box-shadow: none !important;
+}
+
+.fa-angles-left {
+    color: tomato;
+}
+
+.flex-btn {
+    display: flex;
+}
+
+.cancle-button {
+    color: white;
+    padding: 0.9rem;
+    background-color: var(--gray300);
+}
+
+.delete-button {
+    color: white;
+    padding: 0.9rem;
+    background-color: tomato;
+}
+
+.contact-area-container {
+    height: calc(100% - 56px);
+    /* contact-header의 높이(56px)를 제외한 남은 영역만큼 설정 */
+    overflow-y: auto;
+    /* 세로 스크롤을 허용 */
+}
+
+.contact-header {
+    background-color: #fafafa;
+    padding: 0 0 1rem 0;
+
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+
+.contacts {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(-6rem, -50%);
+    width: 24rem;
+    height: 32rem;
+    padding: 0 0 1rem 0;
+    box-sizing: border-box;
+    border-radius: 1rem 0 0 1rem;
+    cursor: pointer;
+    background: white;
+    box-shadow: 0 0 8rem 0 rgba(0, 0, 0, 0.1), 2rem 2rem 4rem -3rem rgba(0, 0, 0, 0.5);
+    transition: transform 500ms;
+    overflow-y: auto;
+    direction: rtl;
+}
+
+.contacts h2 {
+    position: absolute;
+    left: 1.8rem;
+    top: 1.8rem;
+    color: var(--gray700);
+    transition: color 200ms;
+}
+
+.contacts .fa-user {
+    margin: 1.2rem 2rem 1rem 19rem;
+    color: var(--primary700);
+}
+
+.contacts .fa-user:hover {
+    color: var(--primary600);
+}
+
+.contacts .fa-comment {
+    margin: 1.2rem 2rem 1rem 19rem;
+    color: var(--primary700);
+}
+
+.contacts .fa-comment:hover {
+    color: var(--primary600);
+}
+
+.contacts .contact:last-child {
+    margin: 0;
+}
+
+.contacts:hover {
+    transform: translate(-23rem, -50%);
+}
+
+
+.empty-chat-message {
+    display: flex;
+    justify-content: center;
+    padding: 10rem 0;
+    direction: ltr;
+    font-size: 1.5rem;
+    color: var(--gray400);
+}
+
+.colored-toast.swal2-icon-error {
+    width: 13rem !important;
+    background-color: #f27474 !important;
+}
+
+.swal2-popup.swal2-toast .swal2-icon {
+    margin: 0 0.5em 2rem 4rem !important;
+}
+
+.swal2-popup.swal2-toast .swal2-title {
+    color: white !important;
+}
+
+
+#employee-list {
+    display: none;
+}
+
+#employee-area {
+    margin: auto;
+    margin-top: 0;
+    padding: 0 2.71rem;
+    overflow-y: auto;
+    box-shadow: inset 0 2rem 2rem -2rem rgba(0, 0, 0, 0.05), inset 0 -2rem 2rem -2rem rgba(0, 0, 0, 0.05);
+}
+
+#employee-area span {
+    /* margin: 2rem 0 1rem 0; */
+    color: #FFC759;
+    font-weight: bold;
+}
+
+
+#employee-area ul {
+    list-style: none;
+    margin: 1rem 0 0 1rem;
+}
+
+
+.employee-list {
+    margin-bottom: 3rem;
+    display: flex;
+    gap: 11rem;
+}
+
+.employee-details {
+    flex-grow: 1;
+}
+
+.employee-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.fa-angle-down {
+    color: #FFC759;
+    margin-top: 6px;
+}
+
+.employee-group {
+    width: 18rem;
+    position: relative;
+    margin-bottom: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    direction: ltr;
+
+    cursor: pointer;
+}
+
+.employee-dropBox {
+    margin: 2rem 0 1rem 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.employee-dropBox-ul {
+    display: none;
+}
+
+.employee-dropBox-ul p {
+    margin-top: 10px;
+    color: var(--black);
+}
+
+.employee-name-box input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.employee-name-box input[type="radio"]+span {
+    display: inline-block;
+    padding: 6px 10px;
+    border: 1px solid #dfdfdf;
+    border-radius: 5px;
+    background-color: white;
+    text-align: center;
+    cursor: pointer;
+}
+
+.employee-name-box input[type="radio"]:checked+span {
+    /* background-color: #FFC759; */
+    color: white !important;
+}
+
+.employee-name-box .invite-button {
+    display: none;
+    padding: 6px 10px;
+    border: 1px solid #dfdfdf;
+    border-radius: 5px;
+    background-color: white;
+    color: var(--green);
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+
+.employee-arrow {
+    display: none;
+    justify-content: center;
+    padding: 10rem 0;
+    font-size: 1.5rem;
+    color: var(--gray400);
+}
+
+
+.fa-caret-right {
+    margin-top: 10px;
+    margin-left: 4px;
+}
+
+
+
+
+.invite-button:hover {
+    background-color: var(--green);
+    color: white;
+}
+
+.employee-name-box input[type="radio"]:checked+.invite-button {
+    display: inline-block;
+}
+
+.chat {
+    display: none;
+    position: relative;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24rem;
+    height: 38rem;
+    z-index: 2;
+    box-sizing: border-box;
+    border-radius: 1rem;
+    background: white;
+    box-shadow: 0 0 8rem 0 rgba(0, 0, 0, 0.1), 0rem 2rem 4rem -3rem rgba(0, 0, 0, 0.5);
+}
+
+#chat-main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24rem;
+    height: 38rem;
+    z-index: 2;
+    box-sizing: border-box;
+    border-radius: 1rem;
+    background: white;
+    box-shadow: 0 0 8rem 0 rgba(0, 0, 0, 0.1), 0rem 2rem 4rem -3rem rgba(0, 0, 0, 0.5);
+
+}
+
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.chat-header h2 {
+    color: var(--gray700);
+}
+
+#close {
+    cursor: pointer;
+}
+
+#close:hover {
+    color: var(--primary400);
+}
+
+#chat-close {
+    cursor: pointer;
+}
+
+#chat-close:hover {
+    color: var(--primary400);
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.fade-in {
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.chat-main-bar {
+    position: relative;
+
+    padding: 3rem;
+    height: 4.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-basis: 3.5rem;
+    flex-shrink: 0;
+
+    box-sizing: border-box;
+    background-color: white;
+    border-radius: inherit;
+
+
+}
+
+
+.chat .contact {
+    position: relative;
+
+    height: 4.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.bar {
+    padding: 3rem;
+    flex-basis: 3.5rem;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+.chat .messages {
+    /* padding: 1rem; */
+    background: #F7F7F7;
+    flex-shrink: 2;
+    overflow-y: auto;
+    box-shadow: inset 0 2rem 2rem -2rem rgba(0, 0, 0, 0.05), inset 0 -2rem 2rem -2rem rgba(0, 0, 0, 0.05);
+}
+
+
+.chat .messages .time {
+    font-size: 0.8rem;
+    background: #EEE;
+    padding: 0.25rem 1rem;
+    border-radius: 2rem;
+    color: #999;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.chat .messages .message .time-sub {
+    font-size: 0.6rem;
+    color: #999;
+    position: absolute;
+    top: auto;
+    right: 100%;
+    bottom: 0;
+    transform: translateX(-0.5rem);
+    white-space: nowrap;
+}
+
+.chat .messages .message .content.long-message {
+    margin-bottom: 1rem;
+}
+
+.chat .messages .message .content {
+    word-wrap: break-word;
+}
+
+.chat .messages .message.stark .time-sub {
+    font-size: 0.6rem;
+    color: #999;
+    position: absolute;
+    top: auto;
+    left: 100%;
+    bottom: 0;
+    transform: translateX(0.5rem);
+    white-space: nowrap;
+}
+
+.chat .messages .message {
+    box-sizing: border-box;
+    padding: 0.5rem 1rem;
+    margin: 1rem;
+    background: #FFF;
+    border-radius: 1.125rem 1.125rem 1.125rem 0;
+    min-height: 2.25rem;
+    width: fit-content;
+    /* max-width: 66%; */
+    max-width: calc(66% - 2rem);
+    box-shadow: 0 0 2rem rgba(0, 0, 0, 0.075), 0rem 1rem 1rem -1rem rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.chat .messages .message.parker {
+    margin: 1rem 1rem 1rem auto;
+    border-radius: 1.125rem 1.125rem 0 1.125rem;
+    background: var(--primary400);
+    color: white;
+}
+
+.chat .messages .message .typing {
+    display: inline-block;
+    width: 0.8rem;
+    height: 0.8rem;
+    margin-right: 0rem;
+    box-sizing: border-box;
+    background: #ccc;
+    border-radius: 50%;
+}
+
+.chat .messages .message .typing.typing-1 {
+    animation: typing 3s infinite;
+}
+
+.chat .messages .message .typing.typing-2 {
+    animation: typing 3s 250ms infinite;
+}
+
+.chat .messages .message .typing.typing-3 {
+    animation: typing 3s 500ms infinite;
+}
+
+.chat .input {
+    box-sizing: border-box;
+    flex-basis: 4rem;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 0.5rem 0 1.5rem;
+}
+
+.chat .input i {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    color: var(--gray600);
+    cursor: pointer;
+    transition: color 200ms;
+}
+
+.chat .input i:hover {
+    color: #ffc759;
+}
+
+.chat .input input {
+    border: none;
+    background-image: none;
+    background-color: white;
+    padding: 0.5rem 1rem;
+    margin-right: 1rem;
+    border-radius: 1.125rem;
+    flex-grow: 2;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1), 0rem 1rem 1rem -1rem rgba(0, 0, 0, 0.2);
+    font-family: Red hat Display, sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.025em;
+    outline-color: #ffc759;
+}
+
+.chat .input input:placeholder {
+    color: #999;
+}
+
+@keyframes typing {
+
+    0%,
+    75%,
+    100% {
+        transform: translate(0, 0.25rem) scale(0.9);
+        opacity: 0.5;
+    }
+
+    25% {
+        transform: translate(0, -0.25rem) scale(1);
+        opacity: 1;
+    }
+}
+
+
+
+.chat-box {
+    /* display: none; */
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    transform: scale(0);
+    transition: transform 0.3s ease;
+}
+
+.chat-box * {
+    white-space: normal;
+}
+
+.chat-box.open {
+    transform: scale(1);
+}
+
+.chat-box.closing {
+    transform: scale(0);
+}
+
+/* 채팅----------------------------------------------------------- */
+
+
+
+/* 페이지네이션(Pagination) */
+
+
+.pagination a {
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+}
+
+.pagination {
+    margin-top: 40px;
+    padding: 0;
+    list-style: none;
+
+    display: flex;
+    justify-content: center;
+}
+
+.pagination>li {
+    width: 50px;
+    height: 45px;
+    text-align: center;
+    line-height: 45px;
+    border: 1px solid var(--gray200);
+    margin-right: 10px;
+}
+
+.pagination a {
+    width: 100%;
+    height: 100%;
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--gray600);
+}
+
+.pagination a:hover {
+    background-color: var(--gray50);
+}
+
+/* 현재 페이지 번호 */
+.pagination .current {
+    background-color: var(--primary400);
+    color: white;
+    font-weight: bold;
+}
+
+.pagination .current:hover {
+    background-color: var(--primary400);
+}
+
+.prevPage {
+    width: 80px !important;
+}
+
+.blue {
+    color: var(--primary400) !important;
+}
+
+.nextPage {
+    width: 80px !important;
+}
+
+
+
+
+
+/* 사이드바 반응형 */
+
+
+@media(max-width: 1100px) {
+    .side-bar {
+        display: none;
+    }
+
+    .sidebarIconToggle {
+        display: block !important;
+    }
+}
+
+#sidebarMenu {
+    height: 500px;
+    position: fixed;
+    left: -250px;
+    width: 250px;
+    transition: left 250ms ease-in-out;
+    background-color: #f9f9f9;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+  }
+  
+  .sidebarIconToggle {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    cursor: pointer;
+    position: fixed;
+    top: 115px;
+    left: 10px;
+    z-index: 2;
+    height: 22px;
+    width: 22px;
+    display: none;
+  }
+  
+  .spinner {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background-color: var(--gray700);
+  }
+  
+  .horizontal {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    position: relative;
+    float: left;
+    margin-top: 3px;
+  }
+  
+  .diagonal.part-1 {
+    position: relative;
+    transition: all 0.3s;
+    box-sizing: border-box;
+    float: left;
+  }
+  
+  .diagonal.part-2 {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    position: relative;
+    float: left;
+    margin-top: 3px;
+  }
+  
+  .show-sidebar #sidebarMenu {
+    left: 0;
+  }
+  
+  .show-sidebar .sidebarIconToggle .horizontal {
+    opacity: 0;
+  }
+  
+  .show-sidebar .sidebarIconToggle .diagonal.part-1 {
+    transform: rotate(135deg);
+    margin-top: 8px;
+  }
+  
+  .show-sidebar .sidebarIconToggle .diagonal.part-2 {
+    transform: rotate(-135deg);
+    margin-top: -9px;
+  }
+
+
+  .sidebarMenuInner {
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.sidebarMenuInner li:first-child {
+    list-style: none;
+    color: var(--black);
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 30px 0 20px 50px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--gray100);
+    font-size: 24px;
+}
+
+
+.sidebarMenuInner li {
+    list-style: none;
+    color: var(--black);
+    font-weight: bold;
+    padding: 30px 40px;
+    cursor: pointer;
+}
+
+
+
+.sidebarMenuInner li:hover {
+    background-color: var(--gray100);
+}
+
+.sidebarMenuInner li:first-child:hover {
+    background-color: unset;
+}
+
+
+.sidebarMenuInner li span {
+    display: block;
+    font-size: 18px;
+    color: var(--gray700);
+    width: 10rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+}
+
+
+.sidebarMenuInner li a {
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+  
+
+.side-bar {
+    min-width: 300px;
+}
+
+

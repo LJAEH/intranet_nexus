@@ -1,0 +1,231 @@
+:root {
+  --rad: .7rem;
+  --dur: .3s;
+  --color-dark: #2f2f2f;
+  --btn-width: 6rem;
+  --bez: cubic-bezier(0, 0, 0.43, 1.49);
+}
+
+.employee-search form {
+  position: relative;
+  width: 30rem;
+  background: var(--primary400);
+  border-radius: var(--rad);
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-bottom: 150px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.employee-search button {
+  height: 50px;
+  border: none;
+  color: white;
+  font-size: 18px;
+}
+
+.employee-search input {
+  color: var(--black);
+  height: 50px;
+  border: none;
+  color: white;
+  font-size: 18px;
+}
+
+.employee-search input::-moz-placeholder {
+  color: var(--gray200);
+}
+
+.employee-search input::placeholder {
+  color: var(--gray200);
+}
+
+.employee-search input[type=search] {
+  outline: 0;
+  width: 100%;
+  background: white;
+  padding: 0 1.6rem;
+  border-radius: var(--rad);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  transition: all var(--dur) var(--bez);
+  transition-property: width, border-radius;
+  z-index: 1;
+  position: relative;
+}
+
+.employee-search button {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--btn-width);
+  font-weight: bold;
+  background: var(--primary400);
+  border-radius: 0 var(--rad) var(--rad) 0;
+}
+
+.employee-search input:not(:-moz-placeholder-shown) {
+  border-radius: var(--rad) 0 0 var(--rad);
+  width: calc(100% - var(--btn-width));
+}
+
+.employee-search input:not(:placeholder-shown) {
+  border-radius: var(--rad) 0 0 var(--rad);
+  width: calc(100% - var(--btn-width));
+}
+
+.employee-search input:not(:-moz-placeholder-shown)+button {
+  display: block;
+  cursor: pointer;
+}
+
+.employee-search input:not(:placeholder-shown)+button {
+  display: block;
+  cursor: pointer;
+}
+
+.employee-search label {
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0;
+  border: 0;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
+
+.drop {
+  font-family: pfs-bold;
+  color: white;
+  text-transform: uppercase;
+  position: relative;
+  transition: width 0.5s;
+  will-change: width;
+}
+
+.drop .option {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #485761;
+}
+
+.drop .option:not(.active) {
+  display: none;
+  opacity: 0;
+  transform: translateY(-50%);
+}
+
+.drop.visible {
+  animation: bounce 1s;
+  width: 100%;
+}
+
+.drop.visible:before,
+.drop.visible:after {
+  border-color: #fff;
+}
+
+.drop.visible:before {
+  opacity: 0;
+}
+
+.drop.visible:after {
+  opacity: 1;
+}
+
+.drop.visible .option {
+  color: #fff;
+  display: block;
+}
+
+.drop.opacity .option {
+  transform: translateZ(0);
+  opacity: 1;
+}
+
+.drop.opacity .option:nth-child(0) {
+  transition: opacity 0.5s 0s, transform 0.5s 0s;
+}
+
+.drop.opacity .option:nth-child(1) {
+  transition: opacity 0.5s 0.1s, transform 0.5s 0.1s;
+}
+
+.drop.opacity .option:nth-child(2) {
+  transition: opacity 0.5s 0.2s, transform 0.5s 0.2s;
+}
+
+.drop.opacity .option:nth-child(3) {
+  transition: opacity 0.5s 0.3s, transform 0.5s 0.3s;
+}
+
+.drop.opacity .option:nth-child(4) {
+  transition: opacity 0.5s 0.4s, transform 0.5s 0.4s;
+}
+
+.drop.opacity .option:nth-child(5) {
+  transition: opacity 0.5s 0.5s, transform 0.5s 0.5s;
+}
+
+.drop.opacity .option:nth-child(6) {
+  transition: opacity 0.5s 0.6s, transform 0.5s 0.6s;
+}
+
+.drop.opacity .option:nth-child(7) {
+  transition: opacity 0.5s 0.7s, transform 0.5s 0.7s;
+}
+
+.drop.opacity .option:nth-child(8) {
+  transition: opacity 0.5s 0.8s, transform 0.5s 0.8s;
+}
+
+.drop.opacity .option:nth-child(9) {
+  transition: opacity 0.5s 0.9s, transform 0.5s 0.9s;
+}
+
+.drop.withBG .option {
+  transition: background-color 0.1s;
+}
+
+.drop.withBG .option:not(.placeholder):hover {
+  background-color: var(--primary400);
+}
+
+.drop.withBG .option:not(.placeholder).active {
+  background-color: var(--primary400);
+}
+
+.drop:after,
+.drop:before {
+  content: "";
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  width: 0.75em;
+  height: 0.75em;
+  border: 0.2em solid white;
+  transform: rotate(45deg);
+  transform-origin: 90% 10%;
+  transition: opacity 0.2s;
+}
+
+.drop:before {
+  border-left: none;
+  border-top: none;
+  top: 1em;
+}
+
+.drop:after {
+  border-right: none;
+  border-bottom: none;
+  opacity: 0;
+}
+
+.mini-hack {
+  opacity: 0;
+  transform: translateY(-50%);
+}
+
+/*# sourceMappingURL=style.css.map */

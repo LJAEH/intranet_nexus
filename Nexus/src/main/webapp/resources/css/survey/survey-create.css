@@ -1,0 +1,435 @@
+/* 틀을 잡아 놓기 위한 스타일 */
+section {
+
+
+
+  display: flex;
+}
+
+/* 사이드바 전체 스타일 */
+.side-bar {
+  width: 300px;
+  height: 100vh;
+
+  background-color: var(--side);
+
+  z-index: 2;
+}
+
+@media(max-height:789px) {
+  .side-bar {
+    height: unset !important;
+  }
+  
+  .content-all-page {
+    margin-bottom: 10rem !important;
+
+  }
+
+}
+
+
+.side-bar ul {
+  margin: 0;
+  padding: 0;
+
+}
+
+
+/* 사이드바 제목 스타일 */
+.side-bar h1 {
+  font-size: 30px;
+
+  margin: 0;
+
+  padding: 60px 0 40px 35px;
+
+  color: var(--black);
+}
+
+
+/* 사이드바 부제목 스타일 */
+.side-bar li {
+  list-style: none;
+
+}
+
+.side-bar li>a {
+  padding-left: 40px;
+}
+
+
+
+/* 사이드바 선택 되었을때 스타일 */
+/* FIXME:아래 주석처리 되어 있는 코드를 바꿔서 현재페이지에 맞게 지정 해주면 될것 */
+.side-bar li:nth-child(2) {
+  border-left: 10px solid var(--primary500);
+
+  background-color: rgb(230, 232, 236, 50%);
+
+}
+
+.side-bar li:nth-child(2)>a:first-child>span:first-child {
+
+  color: var(--primary400);
+}
+
+.side-bar li:nth-child(2)>a:first-child {
+  padding-left: 30px;
+}
+
+
+
+
+
+
+
+
+/* 사이드바 호버 스타일 시작 ------------------------------*/
+
+*,
+*:after,
+*:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+a:hover,
+a:focus {
+  outline: none;
+}
+
+.side-bar a span {
+  display: block;
+  padding: 7px 15px;
+  text-transform: uppercase;
+  /* text-align: center; */
+  transition: all 0.5s ease 0s;
+}
+
+.side-bar a:hover span {
+  color: var(--primary600);
+}
+
+.side-bar a:before,
+.side-bar a:after,
+.side-bar a span:before,
+.side-bar a span:after {
+  content: "";
+  width: 25%;
+  height: 100%;
+  border-radius: 30px;
+  /* border: 1px solid var(--primary500); */
+  border-left: none;
+  border-right: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s ease 0s;
+  background-color: rgb(230, 232, 236, 50%);
+
+}
+
+.side-bar a:after {
+  left: 25%;
+}
+
+.side-bar a span:before {
+  left: 50%;
+}
+
+.side-bar a span:after {
+  left: 75%;
+}
+
+.side-bar a:hover:before,
+.side-bar a:hover:after,
+.side-bar a:hover span:before,
+.side-bar a:hover span:after {
+  border-radius: 0;
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+
+.menu a {
+  color: var(--black);
+
+  padding: 15px 0 5px 55px;
+
+
+  font-size: 24px;
+
+  position: relative;
+  display: block;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+/* 사이드바 호버 스타일 끝 ------------------------------*/
+
+/* 컨텐츠 영역 전체 */
+.content-all-page {
+  width: 100%;
+  height: 100%;
+
+  margin: auto;
+  margin-top: 70px;
+  margin-left: 50px;
+  margin-right: 50px;
+
+}
+
+
+
+
+/* 설문 생성 윗부분 */
+.survey-create-top {
+  display: flex;
+  flex-direction: column;
+}
+
+.survey-create-top input {
+  height: 35px;
+  line-height: 35px;
+
+  border: none;
+
+  outline: none;
+
+}
+
+.survey-create-top input:nth-child(1) {
+  font-size: 26px;
+  font-weight: bold;
+
+  margin-bottom: 30px;
+}
+
+.survey-create-top input:nth-child(1)::placeholder {
+  color: var(--black);
+}
+
+.survey-create-top input:nth-child(1):focus::placeholder {
+  color: var(--gray200);
+
+  border-bottom: 1px solid var(--gray200);
+}
+
+.survey-create-top input:nth-child(2) {
+  font-size: 16px;
+}
+
+.survey-create-top input:nth-child(2):focus::placeholder {
+  color: var(--gray200);
+
+  border-bottom: 1px solid var(--gray200);
+}
+
+
+/* 설문 생성 content */
+.survey-create-content {
+  /* width: 1100px; */
+
+  padding: 50px;
+  padding-bottom: 100px;
+
+  margin-top: 100px;
+  margin-bottom: 200px;
+
+  display: flex;
+  flex-direction: column;
+
+  border: 1px solid var(--gray300);
+  border-radius: 10px;
+
+}
+
+.survey-create-content input {
+  width: 100%;
+
+  border: none;
+
+  outline: none;
+
+}
+
+.survey-create-content input:focus::placeholder {
+  color: var(--gray200);
+}
+
+.survey-create-content div:nth-child(1) input {
+  font-size: 20px;
+
+  border-bottom: 1px solid var(--gray200);
+
+  margin-bottom: 80px;
+
+  padding-bottom: 10px;
+}
+
+/* 옵션추가부분 */
+.survey-create-content-option {
+  display: flex;
+
+  margin-bottom: 40px;
+
+  border-bottom: 1px solid var(--gray200);
+
+  list-style: none;
+}
+
+.survey-create-content-option li {
+  width: 100%;
+
+  display: flex;
+}
+
+.survey-check {
+  color: var(--gray300);
+}
+
+.survey-create-content-option input {
+  font-size: 18px;
+
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+#survey-option-delete {
+  height: 20px;
+
+  border: none;
+  background-color: transparent;
+
+  cursor: pointer;
+}
+
+#survey-option-delete>i {
+
+  color: var(--gray500);
+}
+
+#survey-option-add {
+  border: none;
+
+  background-color: transparent;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  color: var(--black);
+
+  cursor: pointer;
+}
+
+
+/* 설문 생성 아랫부분 */
+.survey-create-bottom {
+  display: flex;
+  position: fixed;
+  justify-content: flex-end;
+  width: 100%;
+  bottom: 0px;
+  left: 0px;
+  padding: 34px 32px 16px 272px;
+  border-top: 1px solid var(--gray100);
+  background-color: white;
+  z-index: 1;
+  gap: 10px;
+}
+
+#survey-create-bottom-cancle {
+  width: 100px;
+  height: 40px;
+
+  border: 1px solid var(--gray200);
+  border-radius: 5px;
+
+  background-color: white;
+
+  font-size: 15px;
+
+  cursor: pointer;
+
+}
+
+#survey-create-bottom-cancle:hover {
+  background-color: var(--gray200);
+  color: white;
+  transition: all 0.5s;
+}
+
+#survey-create-bottom-submit {
+  width: 100px;
+  height: 40px;
+
+  border: 1px solid var(--gray200);
+  border-radius: 5px;
+
+  background-color: var(--primary400);
+
+  color: white;
+
+  font-size: 15px;
+
+  cursor: pointer;
+}
+
+#survey-create-bottom-submit:hover {
+  background-color: var(--primary500);
+  transition: all 0.5s;
+}
+
+/* 종료일 */
+input[type="date"] {
+  position: relative;
+
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: auto;
+  color: transparent;
+  background: transparent;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-clear-button {
+  z-index: -10;
+}
+
+input[type="date"]::-webkit-input-placeholder {
+  z-index: 99;
+}
+
+input[type="date"]:placeholder {
+  z-index: 99;
+}
+
+input[type="date"]:not(.has-value):before {
+  content: attr(placeholder);
+  width: 100%;
+}
+
+/* 사이드바 반응형 */
+#sidebarMenu {
+  z-index: 2;
+}
+
+.sidebarIconToggle {
+  z-index: 3;
+}
+
+.sidebarMenuInner li:nth-child(3) span {
+  color: var(--primary500);
+}

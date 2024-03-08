@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="deptMapper">
+
+	<!-- 부서 게시판 글 목록 조회 -->
+	<resultMap type="board" id="board_rm">
+		<id 	property="boardNo" 			column="BOARD_NO"/>
+		<result property="memName" 		column="MEM_NAME"/>
+		<result property="boardTitle" 		column="BOARD_TITLE"/>
+		<result property="boardDate" 		column="BOARD_DATE"/>
+	</resultMap>
+
+	<!-- 부서 게시판 상세 조회 -->
+	<resultMap type="detail" id="detail_rm">
+		<id 	property="boardNo" 			column="BOARD_NO"/>
+		<result property="memNo" 			column="MEM_NO"/>
+		<result property="memName" 		column="MEM_NAME"/>
+		<result property="boardTitle" 		column="BOARD_TITLE"/>
+		<result property="boardContent" column="BOARD_CONTENT"/>
+		<result property="boardFileRename" 	column="FILE_RENAME"/>
+		<result property="boardFileOrigin" 		column="FILE_ORIGIN"/>
+		<result property="boardDate" 		column="BOARD_DATE"/>
+		<result property="boardSt" 			column="BOARD_ST"/>
+		<result property="deptNo"			column="DEPT_NO"/>
+	</resultMap>
+	
+	<resultMap type="file" id="file_rm">
+		<id property="fileNo" 					column="FILE_NO"/>
+		<result property="workNo" 			column="WORK_NO"/>
+		<result property="taskNo" 			column="TASK_NO"/>
+		<result property="projectNo" 		column="PROJECT_NO"/>		
+		<result property="noticeNo" 		column="NOTICE_NO"/>	
+		<result property="boardNo" 		column="BOARD_NO"/>	
+		<result property="fileRename" 	column="FILE_RENAME"/>
+		<result property="fileOrigin" 		column="FILE_ORIGIN"/>
+	</resultMap>
+	
+	
+	
+	
+	
+	
+	<!-- 부서 게시판 글 개수 총합 -->
+	<select id="totalCount" parameterType="_int" resultType="_int">
+		SELECT COUNT(*) 
+		FROM BOARD
+		WHERE DEPT_NO = #{deptNo}
+		AND BOARD_ST = 'N'
+	</select>
+	
+	<!-- 부서 게시판 목록 조회 -->
+	<select id="boardList" parameterType="_int" resultMap="board_rm">
+		SELECT BOARD_NO, MEMBER.MEM_NAME, BOARD_TITLE,
+		TO_CHAR(BOARD_DATE, 'YYYY-MM-DD') AS BOARD_DATE
+		FROM BOARD
+		JOIN MEMBER ON BOARD.MEM_NO = MEMBER.MEM_NO
+		WHERE BOARD.BOARD_ST = 'N'
+		AND BOARD.DEPT_NO = ${deptNo}
+		ORDER BY BOARD.BOARD_NO DESC
+	</select>
+	
+	<!-- 부서 게시판 글작성 -->
+	<insert id="insertBoard" parameterType="detail" useGeneratedKeys="true"> 
+		<selectKey keyProperty="boardNo" resultType="_int" order="BEFORE">
+			SELECT SEQ_BOARD_NO.NEXTVAL FROM DUAL
+		</selectKey>
+			INSERT INTO BOARD VALUES( 
+			#{boardNo}, #{memNo}, #{boardTitle}, #{boardContent}, 
+			DEFAULT, DEFAULT, DEFAULT, #{deptNo}
+			)
+	</insert>
+	
+	<!-- 부서게시판 파일업로드 -->
+	<insert id="insertBoardFile" parameterType="file" useGeneratedKeys="true">
+			<selectKey keyProperty="fileNo" resultType="_int" order="BEFORE">
+			SELECT SEQ_FILE_NO.NEXTVAL FROM DUAL
+			</selectKey>
+			INSERT INTO UPLOAD_FILE VALUES( 
+			DEFAULT, DEFAULT, DEFAULT, DEFAULT, #{boardNo}, #{fileReName}, #{fileOrigin}, #{fileNo} 
+			)
+	</insert>
+	
+	<!-- 부서게시판 디테일 조회 -->
+	<select id="boardDetail" parameterType="_int" resultMap="detail_rm">
+			SELECT MEM_NO, MEM_NAME, BOARD_TITLE, BOARD_CONTENT, 
+			       COALESCE(FILE_RENAME, NULL) AS FILE_RENAME,
+			       COALESCE(FILE_ORIGIN, NULL) AS FILE_ORIGIN,
+			       BOARD_DATE
+			FROM BOARD
+			JOIN MEMBER USING (MEM_NO)
+			LEFT JOIN UPLOAD_FILE USING (BOARD_NO)
+			WHERE BOARD_NO = #{boardNo}
+	</select>
+	
+	<delete id="boardFileDelete" parameterType="_int">
+			DELETE FROM UPLOAD_FILE WHERE BOARD_NO = #{boardNo}
+	</delete>
+	
+	<delete id="boardDelete" parameterType="_int">
+			DELETE FROM BOARD WHERE BOARD_NO = #{boardNo}
+	</delete>
+	
+
+	<!-- 공지사항 수정 -->
+	<update id="updateDeptNotice">
+		UPDATE NOTICE SET 
+		TITLE = #{title},
+		CONTENT = #{content}
+		WHERE NOTICE_NO = #{noticeNo}
+	</update>
+	
+	<!-- 파일 수정 -->
+	<update id="updateDeptFileNotice">
+		 UPDATE UPLOAD_FILE SET
+		 FILE_RENAME = #{fileReName},
+		 FILE_ORIGIN = #{fileOrigin}
+		 WHERE NOTICE_NO = #{noticeNo}
+	</update>
+
+	<!-- 본인 부서 프로젝트 리스트 조회(kjw) -->
+	<select id="projectList" resultType="map">
+		SELECT TITLE AS "title", TO_CHAR("START", 'YYYY-MM-DD') AS "start", TO_CHAR("END", 'YYYY-MM-DD') AS "end" 
+		FROM "PROJECT" WHERE DEPT_NO = ${deptNo}
+	</select>
+	
+	<!-- 부서 공지사항 삭제 -->
+	<delete id="deleteDeptNotice">
+		DELETE NOTICE
+		WHERE NOTICE_NO = #{noticeNo}
+	</delete>
+	
+	<!-- 부서 공지사항 파일 삭제 -->
+	<delete id="deleteFileDeptNotice">
+		DELETE UPLOAD_FILE 
+		WHERE NOTICE_NO =  #{noticeNo}
+	</delete>
+	
+	<!-- 부서 게시판 수정 -->
+	<update id="updateBoardNotice">
+		UPDATE BOARD SET 
+		BOARD_TITLE = #{boardTitle},
+		BOARD_CONTENT = #{boardContent}
+		WHERE BOARD_NO = #{boardNo}
+	</update>
+	
+	<!-- 부서 게시판 파일 수정 -->
+	<update id="updateBoardFileNotice">
+		 UPDATE UPLOAD_FILE SET
+		 FILE_RENAME = #{fileReName},
+		 FILE_ORIGIN = #{fileOrigin}
+		 WHERE BOARD_NO = #{boardNo}
+	</update>
+
+	<!-- 본인 팀 연차 현횡 조회(kjw) -->
+	<select id="vacationList" resultType="map">
+		SELECT (TO_CHAR(TO_DATE(TODAY, 'YY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS')) AS "start", ('연차 : ' || COUNT(*) || '명') AS "title"
+		FROM ATTENDANCE 
+		WHERE ATTD_TYPE_NO = 4 
+		AND MEM_NO IN (SELECT MEM_NO FROM "MEMBER" WHERE TEAM_NO = (SELECT TEAM_NO FROM "MEMBER" WHERE MEM_NO = ${memNo})) GROUP BY "TODAY"
+	</select>
+	
+	<!-- 본인 팀 출장 현횡 조회(kjw) -->
+	<select id="businessList" resultType="map">
+		SELECT (TO_CHAR(TO_DATE(TODAY, 'YY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS')) AS "start", ('출장 : ' || COUNT(*) || '명') AS "title"
+		FROM ATTENDANCE 
+		WHERE ATTD_TYPE_NO = 5 
+		AND MEM_NO IN (SELECT MEM_NO FROM "MEMBER" WHERE TEAM_NO = (SELECT TEAM_NO FROM "MEMBER" WHERE MEM_NO = ${memNo})) GROUP BY "TODAY"
+	</select>
+
+</mapper>

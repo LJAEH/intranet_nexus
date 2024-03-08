@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dashBoardMapper">
+
+
+	<resultMap type="attnDoughnut" id="attnDoughnut_rm">
+		<id property="typeNo"  column="TYPE_NO"/>
+		<result property="typeName" column="TYPE_NAME"/>	
+		<result property="typeCount" column="COUNT"/>			
+	</resultMap>
+	
+	<resultMap type="projectPolar" id="projectPolar_rm">
+		<id property="projectNo" 	column="PROJECT_NO"/>
+		<result property="title" 		column="TITLE"/>
+		<result property="percent" 	column="PERCENT"/>
+	</resultMap>
+	
+	<resultMap type="hrManage" id="hrManage_rm">
+		<id property="memNo" 			column="MEM_NO"/>
+		<result property="memName" 	column="MEM_NAME"/>
+		<result property="deptNo" 		column="DEPT_NO"/>
+		<result property="deptName" 	column="DEPT_NAME"/>
+		<result property="teamNo" 		column="TEAM_NO"/>
+		<result property="teamName" 	column="TW_NAME"/>
+		<result property="jobNo" 		column="JOB_NO"/>
+		<result property="jobName" 	column="JOB_NAME"/>
+		<result property="workDay" 	column="WORK_DAY"/>
+		<result property="workTime" 	column="WORK_TIME"/>
+		<result property="workMin" 	column="WORK_MIN"/>
+		<result property="exTime" 		column="EX_TIME"/>
+		<result property="exMin" 		column="EX_MIN"/>
+		<result property="targetDate" 	column="TARGET_DATE"/>
+	</resultMap>
+	
+	<resultMap type="deptTeam" id="deptTeam_rm">
+		<id property="deptNo" 		column="DEPT_NO"/>
+		<result property="deptName" 	column="DEPT_NAME"/>
+		<result property="teamNo" 		column="TEAM_NO"/>
+		<result property="teamName" 	column="TW_NAME"/>
+	</resultMap>
+	
+	<!-- 프로젝트/과제포함 조회 -->
+	<resultMap type="projectTotal" id="projectTotal_rm">
+		<id property="projectNo" 		column="PROJECT_NO"/>
+		<result property="memNo" 		column="MEM_NO"/>
+		<result property="memName" 	column="MEM_NAME"/>
+		<result property="teamName" 	column="TW_NAME"/>		
+		<result property="jobName" 	column="JOB_NAME"/>
+		<result property="title" 			column="TITLE"/>
+		<result property="start" 			column="START"/>
+		<result property="end" 			column="END"/>
+		<result property="workState"  column="WORK_STATE"/>
+		<result property="percent"      column="PERCENT"/>
+		
+		<!-- 과제리스트 -->
+		<collection property="taskList" column="PROJECT_NO" 
+		javaType="java.util.ArrayList" ofType="taskTotal" 
+		select="taskList"/>
+	</resultMap>
+	
+	<resultMap type="taskTotal" id="taskList_rm">
+	    <id property="taskNo" column="TASK_NO" />
+	    <result property="projectNo" column="PROJECT_NO" />
+	    <result property="title" column="TITLE" />
+	    <result property="memName" column="MEM_NAME" />
+	    <result property="teamName" column="TW_NAME"/>
+	    <result property="jobName" column="JOB_NAME" />
+	    <result property="sendDate" column="SEND_DATE"/>
+	    <result property="approvalDate" column="APPROVAL_DATE"/>
+	    <result property="workState" column="WORK_STATE" />
+	</resultMap>
+	
+
+	<!-- 도넛형태 조회 -->
+	<select id="doughnutList" parameterType="_int" resultMap="attnDoughnut_rm">
+		SELECT ATTD_TYPE_NO AS TYPE_NO, ATTD_TYPE_NAME AS TYPE_NAME , COUNT(*) AS COUNT
+		FROM ATTENDANCE
+		JOIN ATTD_TYPE USING (ATTD_TYPE_NO)
+		JOIN "MEMBER" USING (MEM_NO)
+		WHERE DEPT_NO = #{deptNo}
+		AND TODAY = TO_CHAR(SYSDATE, 'YY/MM/DD')
+		GROUP BY ATTD_TYPE_NO, ATTD_TYPE_NAME
+		ORDER BY ATTD_TYPE_NO ASC
+	</select>
+	
+	<!-- 부서 인적자원 조회 -->
+	<select id="hrList" parameterType="_int" resultMap="hrManage_rm">
+		SELECT 
+		    MEM_NO, MEM_NAME, 
+		    DEPARTMENT.DEPT_NO, DEPT_NAME, 
+		    JOB_NO, JOB_NAME , 
+		    TEAM_NO, TW_NAME,
+		    COUNT(*) AS WORK_DAY,
+		    SUM(TO_NUMBER(SUBSTR(WORKING_HOURS , 1, INSTR(WORKING_HOURS, ' 시간') - 1))) as WORK_TIME, 
+		    SUM(TO_NUMBER(SUBSTR(WORKING_HOURS, INSTR(WORKING_HOURS, '시간') + 2, 
+		    INSTR(WORKING_HOURS, ' 분') - INSTR(WORKING_HOURS, '시간') - 2))) as WORK_MIN,
+		    SUM(TO_NUMBER(SUBSTR(EXTENDED_WORKING_HOURS , 1, INSTR(EXTENDED_WORKING_HOURS, ' 시간') - 1))) as EX_TIME, 
+		    SUM(TO_NUMBER(SUBSTR(EXTENDED_WORKING_HOURS, INSTR(EXTENDED_WORKING_HOURS, '시간') + 2, 
+		    INSTR(EXTENDED_WORKING_HOURS, ' 분') - INSTR(EXTENDED_WORKING_HOURS, '시간') - 2))) as EX_MIN 
+		FROM 
+		    ATTENDANCE
+		JOIN 
+		    "MEMBER" USING (MEM_NO)
+		JOIN 
+		    JOB USING (JOB_NO)
+		JOIN 
+		    TEAM USING (TEAM_NO)
+		JOIN 
+		    DEPARTMENT ON MEMBER.DEPT_NO = DEPARTMENT.DEPT_NO 
+		WHERE 
+		    ATTENDANCE.ATTD_TYPE_NO IN (1, 2, 4, 5) 
+		    AND TO_CHAR(TO_DATE(TODAY, 'YY/MM/DD'), 'YY/MM') = TO_CHAR(SYSDATE, 'YY/MM')
+		    AND MEMBER.DEPT_NO = #{deptNo}
+		GROUP BY 
+		    MEM_NO, MEM_NAME, 
+		    DEPARTMENT.DEPT_NO, DEPT_NAME, 
+		    JOB_NO, JOB_NAME,
+		    TEAM_NO, TW_NAME
+		ORDER BY JOB_NO ASC
+	</select>
+	
+	<select id="dtList" parameterType="_int" resultMap="deptTeam_rm">
+		SELECT TEAM_NO, TW_NAME , DEPT_NAME 
+		FROM TEAM
+		JOIN DEPARTMENT USING (DEPT_NO)
+		WHERE DEPT_NO = #{deptNo}
+	</select>
+	
+	<!-- 프로젝트 폴라리스트 조회 -->
+	<select id="polarList" parameterType="_int" resultMap="projectPolar_rm">
+		SELECT PROJECT_NO, P.TITLE AS TITLE, ROUND(COUNT(CASE WHEN PT.WORK_STATE='승인' THEN 1 END)/COUNT(*)*100,1) AS PERCENT
+		FROM PROJECT p 
+		JOIN PROJECT_TASK pt USING (PROJECT_NO)
+		WHERE P.DEPT_NO = #{deptNo}
+		GROUP BY PROJECT_NO, P.TITLE
+		ORDER BY PROJECT_NO ASC
+	</select>
+	
+	<!-- 프로젝트 하위 과제리스트 -->
+	<select id="taskList" resultMap="taskList_rm">
+		SELECT TASK_NO, PROJECT_NO, TITLE, 
+		MEM_NAME, TW_NAME, JOB_NAME, 
+		TO_CHAR("SEND_DATE",'YY-MM-DD') AS SEND_DATE, 
+		TO_CHAR("APPROVAL_DATE",'YY-MM-DD') AS APPROVAL_DATE, 
+		WORK_STATE 
+		FROM PROJECT_TASK pt 
+		JOIN "MEMBER" m USING(MEM_NO)
+		JOIN TEAM USING (TEAM_NO)
+		JOIN JOB USING (JOB_NO)
+		WHERE PROJECT_NO = #{projectNo}
+		ORDER BY TASK_NO ASC
+	</select>
+	
+	<!-- 프로젝트 리스트 -->
+	<select id="projectTotal" parameterType="_int" resultMap="projectTotal_rm">
+		SELECT p.PROJECT_NO, MEM_NAME, 
+		TW_NAME, JOB_NAME, p.TITLE, 
+		TO_CHAR("START",'YY-MM-DD') AS "START", 
+		TO_CHAR("END",'YY-MM-DD') AS "END", 
+		p.WORK_STATE,
+		  ROUND((COUNT(CASE WHEN pt.WORK_STATE = '승인' THEN 1 END) / COUNT(*)) * 100, 1) AS PERCENT
+		FROM PROJECT p
+		JOIN "MEMBER" USING (MEM_NO)
+		JOIN JOB USING (JOB_NO)
+		JOIN TEAM USING (TEAM_NO)
+		JOIN PROJECT_TASK pt ON p.PROJECT_NO = pt.PROJECT_NO
+		WHERE p.DEPT_NO = #{deptNo}
+		GROUP BY p.PROJECT_NO, MEM_NAME, TW_NAME, JOB_NAME, p.TITLE, "START", "END", p.WORK_STATE
+		ORDER BY p.PROJECT_NO ASC
+	</select>
+	
+	<select id="hrTotal" parameterType="map" resultMap="hrManage_rm">
+	  SELECT 
+	    MEM_NO, MEM_NAME, 
+	    DEPARTMENT.DEPT_NO, DEPT_NAME, 
+	    JOB_NO, JOB_NAME, 
+	    TEAM_NO, TW_NAME,
+	    COUNT(*) AS WORK_DAY,
+	    SUM(TO_NUMBER(SUBSTR(WORKING_HOURS , 1, INSTR(WORKING_HOURS, ' 시간') - 1))) as WORK_TIME, 
+	    SUM(TO_NUMBER(SUBSTR(WORKING_HOURS, INSTR(WORKING_HOURS, '시간') + 2, 
+	    INSTR(WORKING_HOURS, ' 분') - INSTR(WORKING_HOURS, '시간') - 2))) as WORK_MIN,
+	    SUM(TO_NUMBER(SUBSTR(EXTENDED_WORKING_HOURS , 1, INSTR(EXTENDED_WORKING_HOURS, ' 시간') - 1))) as EX_TIME, 
+	    SUM(TO_NUMBER(SUBSTR(EXTENDED_WORKING_HOURS, INSTR(EXTENDED_WORKING_HOURS, '시간') + 2, 
+	    INSTR(EXTENDED_WORKING_HOURS, ' 분') - INSTR(EXTENDED_WORKING_HOURS, '시간') - 2))) as EX_MIN,
+	    TO_CHAR(TO_DATE(#{searchDate}, 'YY/MM'), 'YY/MM') as TARGET_DATE
+	  FROM 
+	    ATTENDANCE
+	  JOIN 
+	    MEMBER USING (MEM_NO)
+	  JOIN 
+	    JOB USING (JOB_NO)
+	  JOIN 
+	    TEAM USING (TEAM_NO)
+	  JOIN 
+	    DEPARTMENT ON MEMBER.DEPT_NO = DEPARTMENT.DEPT_NO 
+	  WHERE 
+	    ATTENDANCE.ATTD_TYPE_NO IN (1, 2, 4, 5) 
+	    AND TO_CHAR(TO_DATE(TODAY, 'YY/MM/DD'), 'YY/MM') = #{searchDate}
+	    AND (#{deptNo} = 1 OR MEMBER.DEPT_NO = #{deptNo})
+	  GROUP BY 
+	    MEM_NO, MEM_NAME, 
+	    DEPARTMENT.DEPT_NO, DEPT_NAME, 
+	    JOB_NO, JOB_NAME,
+	    TEAM_NO, TW_NAME
+	  ORDER BY JOB_NO ASC
+	</select>
+
+
+</mapper>

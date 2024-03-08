@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="chatMapper">
+
+	<resultMap type="chatRoom" id="chatroom_rm">
+	
+		<id property="cmNo" column="CM_NO"/>
+		<result property="memNo" column="MEM_NO"/>
+		<result property="inviteName" column="INVITE_NAME"/>
+		<result property="status" column="STATUS"/>
+		<result property="createMemberName" column="CREATE_MEMBER_NAME" />
+		<result property="result" column="RESULT" />
+	
+	</resultMap>
+	
+	<resultMap type="chatRoomJoin" id="chatroomjoin_rm">
+		<id property="cmNo" column="CM_NO" />
+		<result property="memNo" column="MEM_NO"/>
+	</resultMap>
+	
+	<resultMap type="message" id="message_rm">
+		
+		<id property="mNo" column="M_NO" />
+		<id property="cmNo" column="CM_NO" />
+		<id property="memNo" column="MEM_NO" />
+		<id property="mContent" column="M_CONTENT" />
+		<id property="mDate" column="M_DATE" />
+		<id property="memberNick" column="MEMBER_NICK" />
+		
+	</resultMap>
+	
+
+
+<!-- 채팅방 리스트 조회 -->
+	<select id="selectChatRoomList" resultMap="chatroom_rm">
+		SELECT *
+		FROM CHAT_ROOM
+		WHERE (MEM_NO = #{memNo} OR INVITE_NAME = #{memName})
+		AND STATUS = 'Y'
+		ORDER BY CM_NO
+	</select>
+	
+<!-- 채팅 메세지 목록 조회 -->
+	<select id="selectChatMessageList" resultMap="message_rm">
+	 	SELECT M_NO,M_CONTENT, M_DATE, MEMBER_NICK, CM_NO, MEM_NO
+		FROM MESSAGE
+		JOIN MEMBER USING (MEM_NO)
+		WHERE CM_NO = ${cmNo}
+		ORDER BY M_NO
+	</select>
+	
+	<insert id="insertMessage">
+		INSERT INTO MESSAGE VALUES(
+		SEQ_CM_NO.NEXTVAL, #{cmNo}, #{memNo}, #{mContent}, SYSDATE, #{memberNick}
+		)
+	</insert>
+	
+	
+	<insert id="createChatRoom" parameterType="chatroom" useGeneratedKeys="true">
+		<selectKey keyProperty="cmNo" resultType="_int" order="BEFORE">
+			SELECT SEQ_CR_NO.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO CHAT_ROOM VALUES(#{cmNo}, #{memNo}, #{inviteName}, DEFAULT, #{createMemberName}, DEFAULT)
+	</insert>
+	
+	<insert id="createChatRoomJoin">
+	    INSERT INTO CHAT_ROOM_JOIN VALUES(#{memNo}, #{cmNo})
+	</insert>
+	
+	<insert id="inviteMember">
+		INSERT INTO CHAT_ROOM_JOIN VALUES(#{memNo}, #{cmNo})
+	</insert>
+	
+	<select id="selectInviteMember" resultType="_int">
+		SELECT MEM_NO FROM MEMBER 
+		WHERE MEM_NAME = #{inviteName}
+	</select>
+	
+	<delete id="exitChatRoomJoin">
+		DELETE FROM CHAT_ROOM_JOIN WHERE CM_NO = #{cmNo}
+	</delete>
+	
+	<update id="exitChatRoom">
+		UPDATE CHAT_ROOM SET STATUS = 'N'
+		WHERE CM_NO = #{cmNo}
+	</update>
+	
+	
+	
+	
+	
+	
+
+
+</mapper>

@@ -1,0 +1,799 @@
+/* 틀을 잡아 놓기 위한 스타일 */
+section {
+
+
+
+  display: flex;
+}
+
+/* 사이드바 전체 스타일 */
+.side-bar {
+  width: 300px;
+  /* height: 100vh; */
+
+
+  background-color: var(--side);
+
+}
+
+@media(max-height:937px) {
+  .side-bar {
+    height: unset !important;
+  }
+  
+  .content-all-page {
+    margin-bottom: 10rem !important;
+
+  }
+
+}
+
+.side-bar ul {
+  margin: 0;
+  padding: 0;
+}
+
+
+/* 사이드바 제목 스타일 */
+.side-bar h1 {
+  font-size: 30px;
+
+  margin: 0;
+
+  padding: 60px 0 40px 35px;
+
+  color: var(--black);
+}
+
+
+/* 사이드바 부제목 스타일 */
+.side-bar li {
+  list-style: none;
+
+}
+
+
+/* 사이드바 선택 되었을때 스타일 */
+/* FIXME:아래 주석처리 되어 있는 코드를 바꿔서 현재페이지에 맞게 지정 해주면 될것 */
+.side-bar li:nth-child(1) {
+  border-left: 10px solid var(--primary500);
+
+  background-color: rgb(230, 232, 236, 50%);
+
+}
+
+.side-bar li:first-child>a:first-child>span:first-child {
+
+  color: var(--primary400);
+}
+
+.side-bar li:first-child>a:first-child {
+  padding-left: 30px;
+}
+
+
+
+
+
+
+
+
+/* 사이드바 호버 스타일 시작 ------------------------------*/
+
+*,
+*:after,
+*:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+a:hover,
+a:focus {
+  outline: none;
+}
+
+.side-bar a span {
+  display: block;
+  padding: 7px 15px;
+  text-transform: uppercase;
+  /* text-align: center; */
+  transition: all 0.5s ease 0s;
+}
+
+.side-bar a:hover span {
+  color: var(--primary600);
+}
+
+.side-bar a:before,
+.side-bar a:after,
+.side-bar a span:before,
+.side-bar a span:after {
+  content: "";
+  width: 25%;
+  height: 100%;
+  border-radius: 30px;
+  /* border: 1px solid var(--primary500); */
+  border-left: none;
+  border-right: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s ease 0s;
+  background-color: rgb(230, 232, 236, 50%);
+
+}
+
+.side-bar a:after {
+  left: 25%;
+}
+
+.side-bar a span:before {
+  left: 50%;
+}
+
+.side-bar a span:after {
+  left: 75%;
+}
+
+.side-bar a:hover:before,
+.side-bar a:hover:after,
+.side-bar a:hover span:before,
+.side-bar a:hover span:after {
+  border-radius: 0;
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+
+.menu a {
+  color: var(--black);
+
+  padding: 15px 0 5px 55px;
+
+
+  font-size: 24px;
+
+  position: relative;
+  display: block;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+/* 사이드바 호버 스타일 끝 ------------------------------*/
+
+/* 컨텐츠 영역 전체 */
+.content-all-page {
+  width: 100%;
+
+  height: 100%;
+
+  margin-bottom: 10rem;
+}
+
+/* 컨텐츠 상단 부분 */
+.content-all-top-area {
+  margin: auto;
+  margin-top: 70px;
+  margin-left: 130px;
+  margin-right: 130px;
+}
+
+.content-all-top-area-detail {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+/* 컨텐츠 상단 텍스트 */
+.content-all-top-text1 {
+  font-weight: bold;
+  font-size: 16px;
+
+  color: var(--gray400);
+}
+
+.content-all-top-text2 {
+  font-weight: bold;
+  font-size: 24px;
+
+  color: var(--black);
+}
+
+
+/* 컨텐츠 하단 부분 */
+.content-all-bottom-area {
+  margin: auto;
+
+  margin-left: 130px;
+  margin-right: 130px;
+}
+
+
+/* 선 */
+.content-all-top-line {
+  width: 100%;
+  border-bottom: 1px solid var(--gray400);
+
+  margin-top: 30px;
+  margin-bottom: 80px;
+}
+
+
+/* 달력 스타일 */
+/* 달력 폰트 */
+@font-face {
+  font-family: 'omyu_pretty';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+.container {
+  position: relative;
+  /* width: 1200px; */
+  min-height: 850px;
+  margin: 0 auto;
+  padding: 5px;
+  color: white;
+  display: flex;
+  border-radius: 10px;
+  background-color: #373c4f;
+}
+
+.container * {
+  font-family: 'omyu_pretty';
+}
+
+.left {
+  width: 70%;
+  padding: 20px;
+}
+
+.calendar {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  color: #878895;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.calendar::before,
+.calendar::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: 12px;
+  height: 97%;
+  border-radius: 0 5px 5px 0;
+  background-color: #d3d5d6d7;
+  transform: translateY(-50%);
+}
+
+.calendar::before {
+  height: 94%;
+  left: calc(100% + 12px);
+  background-color: rgb(153, 153, 153);
+}
+
+.calendar .month {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 50px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.calendar .month .prev,
+.calendar .month .next {
+  cursor: pointer;
+}
+
+.calendar .month .prev:hover,
+.calendar .month .next:hover {
+  color: #FFC759;
+}
+
+.calendar .weekdays {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.calendar .weekdays div {
+  width: 14.28%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendar .days {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.calendar .days .day {
+  width: 14.28%;
+  height: 90px;
+  display: flex;
+
+  cursor: pointer;
+  color: var(--primary400);
+  border: 1px solid #f5f5f5;
+
+  align-content: flex-start;
+  flex-direction: row-reverse;
+}
+
+.calendar .day:not(.prev-date, .next-date):hover {
+  color: white;
+  background-color: var(--primary300);
+}
+
+.calendar .days .prev-date,
+.calendar .days .next-date {
+  color: #b3b3b3;
+}
+
+.calendar .days .active {
+  position: relative;
+  font-size: 2rem;
+  color: white;
+  background-color: var(--primary400);
+}
+
+.calendar .days .active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 10px 2px var(--primary400);
+}
+
+.calendar .days .today {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #FFC759;
+}
+
+.calendar .days .event {
+  position: relative;
+}
+
+.calendar .days .event::after {
+  content: '';
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  width: 75%;
+  height: 6px;
+  border-radius: 30px;
+  transform: translateX(-50%);
+  background-color: var(--primary400);
+}
+
+.calendar .days .day:hover.event::after {
+  background-color: white;
+}
+
+.calendar .days .active.event::after {
+  background-color: white;
+  bottom: 20%;
+}
+
+.calendar .days .active .event {
+  padding-bottom: 10px;
+}
+
+.calendar .goto-today {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  padding: 0 20px;
+  margin-bottom: 20px;
+  color: var(--primary400);
+}
+
+.calendar .goto-today .goto {
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 2px solid #FFC759;
+}
+
+.calendar .goto-today .goto input {
+  width: 100%;
+  height: 30px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  padding: 0 20px;
+  color: #FFC759;
+}
+
+.calendar .goto-today .goto input::placeholder {
+  color: var(--gray200);
+}
+
+.calendar .goto-today button {
+  padding: 8px 10px;
+  border: 2px solid #FFC759;
+  border-radius: 5px;
+  background-color: transparent;
+  cursor: pointer;
+  color: #FFC759;
+}
+
+.calendar .goto-today button:hover {
+  color: white;
+  background-color: #FFC759;
+}
+
+.calendar .goto-today .goto button {
+  border: none;
+  border-left: 2px solid #FFC759;
+  border-radius: 0;
+}
+
+.day.sun {
+  color: red !important;
+}
+
+.container .right {
+  position: relative;
+  width: 30%;
+  min-height: 100%;
+  padding: 20px 0;
+}
+
+.right .today-date {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  padding-left: 70px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  text-transform: capitalize;
+}
+
+.today-date .event-day {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.today-date .event-date {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #878895;
+}
+
+.events {
+  width: 100%;
+  height: 100%;
+  max-height: 600px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+}
+
+.events .event {
+  position: relative;
+  width: 95%;
+  min-height: 70px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0 20px;
+  padding-left: 50px;
+  color: white;
+  cursor: pointer;
+  background: linear-gradient(90deg, #3f4458, transparent);
+}
+
+.events .event:nth-child(even) {
+  background: transparent;
+}
+
+.events .event:hover {
+  background: linear-gradient(90deg, var(--primary400), transparent);
+}
+
+.events .event .title .event-title {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-left: 20px;
+}
+
+.events .event .title i {
+  color: var(--primary400);
+  font-size: 0.5rem;
+}
+
+.events .event:hover .title i,
+.events .event:hover .event-time {
+  color: white;
+}
+
+.events .event .event-time {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #878895;
+  margin-left: 15px;
+  pointer-events: none;
+}
+
+.events .event::after {
+  content: "✔";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  font-size: 3rem;
+  line-height: 1;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.3;
+  color: var(--primary400);
+  transform: translateY(-50%);
+}
+
+.events .event:hover::after {
+  display: flex;
+}
+
+.events .no-event {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #878787;
+}
+
+.add-event-wrapper {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  width: 90%;
+  max-height: 0;
+  overflow: hidden;
+  border-radius: 5px;
+  background-color: white;
+  transform: translateX(-50%);
+  transition: max-height 0.5s;
+}
+
+.add-event-wrapper.active {
+  max-height: 300px;
+}
+
+.add-event-header {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  color: #373c4f;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.add-event-header .close {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.add-event-header .close:hover {
+  color: var(--primary400);
+}
+
+.add-event-header .title {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.add-event-body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 20px;
+}
+
+.add-event-body .add-event-input {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.add-event-body .add-event-input input {
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #f5f5f5;
+  padding: 0 10px;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #373c4f;
+}
+
+.add-event-body .add-event-input input::placeholder {
+  color: var(--gray200);
+}
+
+.add-event-body .add-event-input input:focus {
+  border-color: var(--primary400);
+}
+
+.add-event-body .add-event-input input:focus::placeholder {
+  color: var(--primary400);
+}
+
+.add-event-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.add-event-btn {
+  height: 40px;
+  font-size: 1rem;
+  font-weight: 500;
+  outline: none;
+  color: white;
+  background-color: #485761;
+  /* border-radius: 5px; */
+  cursor: pointer;
+  padding: 5px 10px;
+  border: 1px solid #485761;
+}
+
+.add-event-btn:hover {
+  color: #485761;
+  background-color: transparent;
+}
+
+.add-event {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: #878895;
+  border: 2px solid #878895;
+  opacity: 0.5;
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.add-event:hover {
+  opacity: 1;
+}
+
+.add-event i {
+  pointer-events: none;
+}
+
+
+
+/* 회의실 선택 css */
+.meetingRoom-box {
+  width: 100%;
+  height: 30px;
+  margin-bottom: 20px;
+}
+
+.meetingRoom-select {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
+
+.meetingRoom-select:focus {
+  outline-color: #FFC759;
+}
+
+
+
+
+.day-time-box {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.day-times {
+  width: 50%;
+}
+
+.day-times input[type="radio"] {
+  display: none;
+}
+
+.day-times input[type="radio"]+span {
+  display: inline-block;
+  padding: 15px 10px;
+  border: 1px solid var(--gray200);
+
+  background-color: white;
+  color: var(--black);
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.day-times input[type="radio"]:checked+span {
+  background-color: #485761;
+  color: white;
+  border: none;
+}
+
+
+/* 사이드바 반응형 */
+#sidebarMenu {
+  z-index: 2;
+}
+
+.sidebarIconToggle {
+  z-index: 3;
+}
+
+
+.sidebarMenuInner li span {
+  color: var(--primary500);
+}
